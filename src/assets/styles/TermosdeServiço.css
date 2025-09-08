@@ -1,0 +1,81 @@
+/* src/assets/styles/termsOfService.css */
+
+/* VARIÁVEIS DE COR para o tema */
+:root {
+    --cor-fundo-geral: #111;
+    --cor-texto-principal: #f0f0f0;
+    --cor-texto-secundario: #aaa;
+    --cor-fundo-card: #1a1a1a;
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --cor-fundo-geral: #f0f2f5;
+        --cor-texto-principal: #2c3e50;
+        --cor-texto-secundario: #555;
+        --cor-fundo-card: #fff;
+    }
+}
+
+/* Estilos de layout e cor */
+.terms-of-service-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: var(--cor-fundo-card);
+    color: var(--cor-texto-principal);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.terms-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--cor-texto-principal);
+}
+
+.terms-header p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+}
+
+.terms-section {
+    margin-top: 2rem;
+}
+
+.terms-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--cor-texto-principal);
+}
+
+.terms-section p, .terms-section li {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 0.8rem;
+}
+
+.terms-section ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+}
+
+.terms-section li {
+    margin-bottom: 0.5rem;
+}
+
+/* Adaptando para o modo claro */
+@media (prefers-color-scheme: light) {
+    .terms-of-service-container {
+        background-color: var(--cor-fundo-card);
+        color: var(--cor-texto-principal);
+    }
+    .terms-header h1, .terms-section h2 {
+        color: var(--cor-texto-principal);
+    }
+    .terms-header p, .terms-section p, .terms-section li {
+        color: var(--cor-texto-secundario);
+    }
+}
