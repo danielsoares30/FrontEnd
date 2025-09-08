@@ -21,7 +21,8 @@ import Transacoes from './pages/Transacoes.jsx';
 import Perfil from './pages/Perfil.jsx';
 import Configuracoes from './pages/Configuracoes.jsx';
 import BuscarProjetos from './pages/BuscarProjetos.jsx';
-import EncontrarFreelancers from './pages/EncontrarFreelancer.jsx'
+import EncontrarFreelancers from './pages/EncontrarFreelancer.jsx';
+import PaginaProposta from './pages/PaginaProposta.jsx'
 
 
 
@@ -53,6 +54,7 @@ function App() {
 
             <Route path="buscar-projetos" element={<BuscarProjetos />} />
             <Route path="encontrar-freelancers" element={<EncontrarFreelancers />} /> 
+            <Route path="pagina-propostas" element={<PaginaProposta />} />
             
           </Route>
         </Routes>

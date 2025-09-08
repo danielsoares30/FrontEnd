@@ -1,0 +1,105 @@
+/* src/assets/styles/makeProposal.css */
+
+/* VARIÁVEIS DE COR para o tema */
+:root {
+    --cor-fundo-geral: #111;
+    --cor-fundo-card: #1a1a1a;
+    --cor-borda-card: #333;
+    --cor-texto-principal: #f0f0f0;
+    --cor-texto-secundario: #aaa;
+    --cor-primaria: #0070f3;
+    --cor-primaria-hover: #005bb5;
+}
+.light-mode {
+    --cor-fundo-geral: #f0f2f5;
+    --cor-fundo-card: #fff;
+    --cor-borda-card: #e0e0e0;
+    --cor-texto-principal: #2c3e50;
+    --cor-texto-secundario: #555;
+    --cor-primaria: #0070f3;
+    --cor-primaria-hover: #005bb5;
+}
+
+/* Estilos da página de proposta */
+.proposal-container {
+    max-width: 700px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: var(--cor-texto-principal);
+}
+
+.proposal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.proposal-header h1 {
+    font-size: 2.5rem;
+    color: var(--cor-texto-principal);
+    margin-bottom: 0.5rem;
+}
+
+.proposal-header p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+}
+
+.proposal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--cor-texto-principal);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 1rem;
+    background-color: var(--cor-fundo-geral);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--cor-texto-principal);
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionamento vertical */
+}
+
+.submit-proposal-btn {
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--cor-primaria-texto);
+    background-color: var(--cor-primaria);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.submit-proposal-btn:hover {
+    background-color: var(--cor-primaria-hover);
+    transform: translateY(-2px);
+}

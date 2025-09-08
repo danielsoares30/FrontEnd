@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import '../assets/styles/buscarProjetos.css';
+import { Link } from 'react-router-dom'; // Importado o Link
 import GhostNoResults from '../components/GhostNoResults.jsx';
+import '../assets/styles/buscarProjetos.css';
+import '../pages/PaginaProposta.jsx'
 
 
 // --- ÍCONES (SVG embutido para simplicidade) ---
@@ -8,9 +10,6 @@ const IconSearch = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" heig
 
 // --- Mapeamento de habilidades para ícones (para as tags) ---
 const skillIcons = {
-    'HTML': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
-    'CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg',
-    'JavaScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
     'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg',
     'TypeScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg',
     'GIT': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg',
@@ -38,6 +37,8 @@ const skillIcons = {
     'TensorFlow': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg',
     'Pandas': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg',
     'Jupyter': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg',
+    'HTML': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
+    'CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg',
 };
 
 
@@ -108,7 +109,7 @@ const SkillTagWithIcon = ({ skillName }) => {
 };
 
 // Refatoração do componente ProjectCard para um layout mais visual
-const ProjectCard = ({ title, description, skills }) => (
+const ProjectCard = ({ id, title, description, skills }) => (
     <article className="project-card">
         <div className="card-content">
             <h2 className="project-title">{title}</h2>
@@ -120,7 +121,10 @@ const ProjectCard = ({ title, description, skills }) => (
             </div>
         </div>
         <div className="card-action">
-            <button className="proposta-btn">Faça sua proposta</button>
+            {/* O BOTÃO AGORA É UM LINK QUE PASSA O ID DO PROJETO */}
+            <Link to={`/pagina-propostas`} className="proposta-btn">
+                Faça sua proposta
+            </Link>
         </div>
     </article>
 );
@@ -200,7 +204,13 @@ const BuscarProjetos = () => {
                 <main className="project-list">
                     {currentProjects.length > 0 ? (
                         currentProjects.map(project => (
-                            <ProjectCard key={project.id} {...project} />
+                            <ProjectCard 
+                                key={project.id} 
+                                id={project.id} // Passa o ID do projeto para o ProjectCard
+                                title={project.title} 
+                                description={project.description} 
+                                skills={project.skills} 
+                            />
                         ))
                     ) : (
                         <GhostNoResults />
