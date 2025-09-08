@@ -1,0 +1,98 @@
+/* Ficheiro: src/assets/styles/login.css */
+
+/* 1. VARIÁVEIS DE TEMA (PALETA DE CORES) */
+/* Estas variáveis são lidas da classe no body */
+:root {
+  --cor-fundo: #FFFFFF;
+  --cor-texto: #111827;
+  --cor-texto-suave: #6B7280;
+  --cor-primaria: #4f46e5;
+  --cor-primaria-hover: #4338ca;
+  --cor-borda: #D1D5DB;
+  --cor-fundo-input: #f9fafb;
+  --cor-fundo-painel-esquerdo: linear-gradient(160deg, #6366f1, #4f46e5);
+}
+
+body.dark-mode {
+  --cor-fundo: #0f172a;
+  --cor-texto: #e2e8f0;
+  --cor-texto-suave: #94a3b8;
+  --cor-primaria: #818cf8;
+  --cor-primaria-hover: #6366f1;
+  --cor-borda: #334155;
+  --cor-fundo-input: #1e293b;
+  --cor-fundo-painel-esquerdo: linear-gradient(160deg, #1e293b, #0f172a);
+}
+
+/* 2. LAYOUT GERAL DA PÁGINA */
+.login-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--cor-fundo); /* << CORREÇÃO IMPORTANTE */
+  color: var(--cor-texto);
+}
+
+/* 3. PAINEL ESQUERDO (ILUSTRAÇÃO) */
+.login-panel-left {
+  background: var(--cor-fundo-painel-esquerdo);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+.panel-content { text-align: center; }
+.panel-content h2 { font-size: 2.5rem; margin-bottom: 2rem; }
+.panel-content img { max-width: 80%; height: auto; }
+
+/* 4. PAINEL DIREITO (FORMULÁRIO) */
+.login-panel-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: var(--cor-fundo); /* << CORREÇÃO IMPORTANTE */
+}
+.login-form-container { width: 100%; max-width: 400px; }
+.login-form h1 { color: var(--cor-texto); /* ... */ }
+.login-form .subtitle { color: var(--cor-texto-suave); /* ... */ }
+.input-group label { color: var(--cor-texto-suave); /* ... */ }
+.input-group input {
+  background-color: var(--cor-fundo-input);
+  border: 1px solid var(--cor-borda);
+  color: var(--cor-texto);
+  /* ... */
+}
+.input-group input:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-primaria) 20%, transparent);
+}
+.btn-submit { background-color: var(--cor-primaria); /* ... */ }
+.btn-submit:hover { background-color: var(--cor-primaria-hover); }
+.signup-link { color: var(--cor-texto-suave); }
+.signup-link a { color: var(--cor-primaria); }
+
+/* ... (O resto do seu CSS continua aqui, como o social-login) ... */
+.social-login-divider { 
+    margin-top: 25px;
+    margin-left: 145px;
+    font-size: 20px;
+ }
+.social-btn {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  color: var(--cor-texto);
+}
+.social-btn:hover {
+  border-color: var(--cor-primaria);
+  background-color: var(--cor-fundo-input);
+}
+
+
+/* 5. RESPONSIVIDADE */
+@media (max-width: 850px) {
+  .login-page { grid-template-columns: 1fr; }
+  .login-panel-left { display: none; }
+}

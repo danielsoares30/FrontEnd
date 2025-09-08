@@ -1,0 +1,704 @@
+/* ==========================================================================
+   1. ESTILOS GLOBAIS E VARIÁVEIS DE TEMA
+   ========================================================================== */
+
+/* --- Fontes e Estilo Base --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    background-color: var(--cor-fundo);
+    width: 100%;
+}
+
+/* --- Variáveis de Tema (Light & Dark Mode) --- */
+:root {
+    /* MODO CLARO (PADRÃO) */
+    --cor-fundo: #FFFFFF;
+    --cor-texto: black;
+    --cor-texto-secundario: #333;
+    --cor-texto-branco: #FFFFFF;
+    --cor-primaria: #0234FD;
+    --cor-borda: black;
+    --cor-borda-clara: #d1d5db;
+    --sombra-card: 0 0 15px rgba(2, 52, 253, 0.7);
+    --sombra-card-hover: 0 0 25px rgba(2, 52, 253, 1);
+    --cor-fundo-tag: #eef2ff;
+    --cor-texto-tag: #4338ca;
+    --cor-borda-tag: #dbeafe;
+    --switch-desligado: #ccc;
+    --switch-ligado: #ccc; /* Pode querer mudar para --cor-primaria */
+    --cor-footer-texto: #1a1a1a;
+    --cor-footer-texto-suave: #555;
+    --cor-footer-link: #333;
+    --cor-footer-fundo: #ffffff;
+    --cor-footer-borda: #f0f0f0;
+    --cor-footer-azul: #0052FF;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.dark-mode {
+    /* MODO ESCURO */
+    --cor-fundo: #121212;
+    --cor-texto: #e0e0e0;
+    --cor-texto-secundario: #bbbbbb;
+    --cor-texto-branco: #e0e0e0;
+    --cor-primaria: #ffff00;
+    --cor-borda: #ffff00;
+    --cor-borda-clara: #374151;
+    --sombra-card: 0 0 15px #ffff00;
+    --sombra-card-hover: 0 0 25px #ffff00;
+    --cor-fundo-tag: #374151;
+    --cor-texto-tag: #A5B4FC;
+    --cor-borda-tag: #4B5563;
+    --switch-desligado: #444;
+    --switch-ligado: #444; /* Pode querer mudar para --cor-primaria */
+    --cor-footer-texto: #e0e0e0;
+    --cor-footer-texto-suave: #9CA3AF;
+    --cor-footer-link: #bbbbbb;
+    --cor-footer-fundo: #1a1a1a;
+    --cor-footer-borda: #374151;
+    --cor-footer-azul: #CD7F32;
+}
+
+
+html {
+    /* Garante que o fundo da página inteira tenha a cor do tema */
+    background-color: var(--cor-fundo);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo); /* Mantém a cor aqui também */
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+main{
+    background-color: var(--cor-fundo);
+    width: 100%;
+}
+#cabeçalho {
+    display: flex;
+}
+
+#logo {
+    width: 25%;
+    margin-top: -5%;
+}
+
+#cabeçalho ul {
+    display: flex;
+    padding: 5%;
+}
+
+#cabeçalho li {
+    list-style: none;
+    margin-left: 20%;
+    padding: 10%;
+    font-size: 18px;
+    color: var(--cor-texto);
+}
+
+#cabeçalho li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* --- Componente Switch --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: 7%;
+    margin-left: 15%;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--switch-desligado);
+    border-radius: 34px;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--switch-ligado);
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+    -webkit-transform: translateX(26px);
+}
+
+
+/* ==========================================================================
+   3. BOTÕES
+   ========================================================================== */
+
+/* --- Estilos comuns para botões de ação --- */
+.Login,
+.serviços,
+.btnlogin {
+    border-radius: 20px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.Login a,
+.serviços a,
+.btnlogin a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* --- Botão Principal (Login / Serviços) --- */
+.Login {
+    width: 143px;
+    height: 50px;
+    margin-left: 15%;
+    margin-top: 6%;
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-branco);
+    position: relative;
+    overflow: hidden;
+}
+
+.Login a {
+    font-size: 32px;
+    color: var(--cor-texto-branco);
+}
+
+.Login:hover {
+    background-color: var(--cor-fundo);
+    border-color: var(--cor-primaria);
+}
+
+.Login:hover a {
+    color: var(--cor-primaria);
+}
+
+.serviços {
+    width: 130px;
+    height: 40px;
+    margin-top: 2%;
+    background-color: var(--cor-primaria);
+}
+
+.serviços a {
+    color: var(--cor-texto-branco);
+}
+
+.serviços:hover {
+    background-color: var(--cor-fundo);
+    border-color: var(--cor-primaria);
+}
+
+.serviços:hover a {
+    color: var(--cor-primaria);
+}
+
+/* --- Botão Secundário --- */
+.btnlogin {
+    width: 130px;
+    height: 40px;
+    margin-top: -1%; /* Considerar ajustar isso para um layout mais flexível */
+    background-color: var(--cor-fundo);
+    border-color: var(--cor-borda);
+}
+
+.btnlogin a {
+    color: var(--cor-texto);
+}
+
+.btnlogin:hover {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.btnlogin:hover a {
+    color: var(--cor-texto-branco);
+}
+
+
+/* ==========================================================================
+   4. SEÇÕES PRINCIPAIS
+   ========================================================================== */
+
+/* --- Seção Banner --- */
+#banner {
+    margin-left: 10%;
+    margin-top: -3%;
+    height: 20%;
+    align-items: left;
+}
+
+#banner h2 {
+    font-size: 48px;
+}
+
+#banner h5 {
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: 0.5%;
+}
+
+#banner img {
+    float: right;
+    width: 500px;
+    margin-top: -27%;
+}
+
+body.dark-mode #banner img {
+    filter: brightness(0.8) saturate(0.9);
+}
+
+/* --- Seção de Cards em Duas Colunas --- */
+#container1,
+#container2 {
+    width: 45%;
+    height: 280px;
+    margin-top: 10%;
+    margin-left: 20px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 30px;
+    background-color: var(--cor-fundo);
+    box-shadow: var(--sombra-card);
+    transition: all 0.3s ease-in-out;
+}
+
+#container1:hover,
+#container2:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+#container1 img,
+#container2 img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    float: right;
+    margin-top: -40%;
+    margin-right: 3%;
+}
+
+#container2 {
+    float: right;
+    margin-right: 80px;
+    margin-top: -22.5%;
+}
+
+#container2 img {
+    margin-right: 6%;
+}
+
+#titulo2, #titulo3 {
+    margin-top: 5%;
+    margin-left: 5%;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+#dev1, #dev2 {
+    font-size: 40px;
+    font-weight: normal;
+    color: var(--cor-primaria);
+    margin-top: -2%;
+    margin-left: 5%;
+}
+
+#sub2, #sub3 {
+    font-size: 26px;
+    margin-top: 1%;
+    margin-left: 5%;
+}
+
+/* --- Seção de Informações / Como Funciona --- */
+.informações {
+    padding: 4rem 5%;
+    text-align: center;
+}
+
+.funciona {
+    font-size: 2.5rem;
+    margin: 0 0 3rem 0;
+    text-align: center;
+}
+
+.info-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+}
+
+#card1, #card2, #card3, #card4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#card1 img, #card2 img, #card3 img, #card4 img {
+    width: 40px;
+    height: 40px;
+}
+
+.uploadh5, .inboxh5, .checkh5, .moneyh5 {
+    font-size: 16px;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    margin: 0;
+}
+
+/* --- Seção de Oportunidades / Vagas --- */
+#oportunidades {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 4rem 0 3rem 0;
+}
+
+#vagas,
+#vaga2,
+#vaga3 {
+    max-width: 800px;
+    margin: 1.5rem auto;
+    padding: 24px;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda-clara);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .05);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+#vagas:hover,
+#vaga2:hover,
+#vaga3:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1);
+}
+
+.vaga-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.vaga-info h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.vaga-detalhes {
+    text-align: right;
+    flex-shrink: 0;
+    padding-left: 1rem;
+}
+
+.vaga-detalhes .salario,
+.vaga-detalhes .local {
+    margin: 0;
+    color: var(--cor-texto-secundario);
+}
+
+.vaga-detalhes .salario {
+    font-weight: 500;
+}
+
+.container-linguagens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-linguagem {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    background-color: var(--cor-fundo-tag);
+    color: var(--cor-texto-tag);
+    border: 1px solid var(--cor-borda-tag);
+    border-radius: 16px;
+    font-weight: 500;
+}
+
+.linguagem-logo {
+    width: 18px;
+    height: 18px;
+}
+
+/* --- Seção FAQ --- */
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 4rem 2rem;
+}
+
+.faq-section .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--cor-texto);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.faq-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda-clara);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+.faq-question {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    margin: 0 0 1rem 0;
+}
+
+.faq-answer {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* --- Seção CTA (Call to Action) --- */
+.cta-section {
+    display: flex;
+    /* Adicionado para garantir o alinhamento em coluna */
+    align-items: center;
+    text-align: center; /* Adicionado para centralizar texto */
+    padding: 5rem 2rem;
+    margin-top: 2rem;
+}
+
+.pronto {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.subpronto {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+    max-width: 550px;
+    margin: 0 0 2.5rem 0;
+}
+
+.conta {
+    padding: 0;
+    background-color: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.conta:hover {
+    background-color: var(--cor-fundo);
+    border-color: var(--cor-primaria);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+.conta a {
+    display: block;
+    padding: 1rem 2.5rem;
+    color: var(--cor-texto-branco);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: color .3s ease;
+}
+
+.conta:hover a {
+    color: var(--cor-primaria);
+}
+
+
+/* ==========================================================================
+   5. RODAPÉ
+   ========================================================================== */
+
+.site-footer {
+    background-color: var(--cor-footer-fundo);
+    color: var(--cor-footer-texto);
+    border-top: 1px solid var(--cor-footer-borda);
+    padding: 4rem 5%;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.footer-col-logo {
+    grid-column: span 2;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--cor-footer-azul);
+}
+
+.logo-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.logo-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--cor-footer-texto-suave);
+    max-width: 350px;
+    margin: 0;
+}
+
+.footer-col h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cor-footer-azul);
+    text-transform: uppercase;
+    margin: 0 0 1.5rem 0;
+}
+
+.footer-col nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-col nav ul li a {
+    color: var(--cor-footer-link);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.footer-col nav ul li a:hover {
+    color: var(--cor-footer-azul);
+    text-decoration: underline;
+}
+
+.footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-social-icons a {
+    color: var(--cor-footer-texto-suave);
+    transition: all 0.3s ease;
+}
+
+.footer-social-icons a:hover {
+    color: var(--cor-footer-azul);
+    transform: translateY(-2px);
+}
+
+.footer-social-icons svg {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-divider {
+    height: 1px;
+    background-color: var(--cor-footer-borda);
+    border: none;
+    margin: 2rem 0;
+}
+
+.footer-bottom {
+    font-size: 0.9rem;
+    color: var(--cor-footer-texto-suave);
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   6. ANIMAÇÕES
+   ========================================================================== */
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(60px) rotate(-3deg);
+    transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+}

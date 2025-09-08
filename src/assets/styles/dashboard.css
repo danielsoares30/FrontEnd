@@ -1,0 +1,186 @@
+:root {
+  /* MODO CLARO (PADRÃO) */
+  --cor-fundo: #FFFFFF;
+  --cor-texto: black;
+  --cor-texto-secundario: #333;
+  --cor-texto-branco: #FFFFFF;
+  --cor-primaria: #0234FD;
+  --cor-borda: black;
+  --cor-borda-clara: #d1d5db;
+  --sombra-card: 0 0 15px rgba(2, 52, 253, 0.7);
+  --sombra-card-hover: 0 0 25px rgba(2, 52, 253, 1);
+  --cor-fundo-tag: #eef2ff;
+  --cor-texto-tag: #4338ca;
+  --cor-borda-tag: #dbeafe;
+  --switch-desligado: #ccc;
+  --switch-ligado: #ccc;
+  --cor-footer-texto: #1a1a1a;
+  --cor-footer-texto-suave: #555;
+  --cor-footer-link: #333;
+  --cor-footer-fundo: #ffffff;
+  --cor-footer-borda: #f0f0f0;
+  --cor-footer-azul: #0052FF;
+}
+
+body.dark-mode {
+  /* MODO ESCURO */
+  --cor-fundo: #121212;
+  --cor-texto: #e0e0e0;
+  --cor-texto-secundario: #bbbbbb;
+  --cor-texto-branco: #e0e0e0;
+  --cor-primaria: #CD7F32;
+  --cor-borda: #CD7F32;
+  --cor-borda-clara: #374151;
+  --sombra-card: 0 0 15px #CD7F32;
+  --sombra-card-hover: 0 0 25px #CD7F32;
+  --cor-fundo-tag: #374151;
+  --cor-texto-tag: #A5B4FC;
+  --cor-borda-tag: #4B5563;
+  --switch-desligado: #444;
+  --switch-ligado: #444;
+  --cor-footer-texto: #e0e0e0;
+  --cor-footer-texto-suave: #9CA3AF;
+  --cor-footer-link: #bbbbbb;
+  --cor-footer-fundo: #1a1a1a;
+  --cor-footer-borda: #374151;
+  --cor-footer-azul: #CD7F32;
+}
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem; 
+}
+
+.dashboard-card {
+  background-color: var(--cor-card);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--cor-fundo);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease-in-out;
+}
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cor-texto-principal);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--cor-texto-principal);
+}
+.card-header i { font-size: 1.1rem; }
+.card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--cor-texto-principal);
+}
+
+.card-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.card-saldo, .card-ganhos, .card-nivel, .card-perfil { grid-column: span 1; }
+.card-atividades, .card-grafico { grid-column: span 2; }
+
+.card-nivel {
+  background-color: transparent;
+  border: 1px solid #d97706;
+  border-color: #d97706;
+}
+.card-nivel .card-value {
+  color: #d97706;
+  font-size: 25px;
+  display: inline;
+  margin-left: 0.5rem;
+}
+
+.activity-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 0;
+  color: var(--cor-texto-secundario-escuro);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.edit-profile-link {
+  color:var(--cor-texto-principal);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-container { grid-template-columns: repeat(2, 1fr); }
+  .card-saldo, .card-ganhos, .card-nivel, .card-perfil,
+  .card-atividades, .card-grafico { grid-column: span 1; }
+}
+@media (max-width: 768px) {
+  .dashboard-container { grid-template-columns: 1fr; }
+}
+.cta-card {
+  grid-column: 1 / -1; /* Ocupa todas as colunas do grid. */
+  background-color: transparent;
+  border: 2px dashed var(--cor-borda);
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transicao);
+}
+
+.cta-card:hover {
+  border-color: var(--cor-primaria);
+  background-color: rgba(99, 102, 241, 0.05); /* Fundo subtil ao passar o rato */
+}
+
+.cta-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
+  color: var(--cor-primaria);
+}
+
+.cta-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+  max-width: 500px;
+  line-height: 1.4;
+  margin: 0 0 0.75rem 0;
+}
+
+.cta-subtitle {
+  font-size: 1rem;
+  color: var(--cor-texto-secundario);
+  margin: 0 0 2rem 0;
+}
+
+.cta-button {
+  background-color: var(--cor-primaria);
+  color: var(--cor-primaria-texto);
+  border: none;
+  border-radius: var(--raio-borda);
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicao);
+}
+
+.cta-button:hover {
+  background-color: var(--cor-primaria-hover);
+  transform: translateY(-2px);
+}

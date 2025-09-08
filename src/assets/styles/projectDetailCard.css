@@ -1,0 +1,152 @@
+/* Ficheiro: src/assets/styles/projectDetailCard.css */
+
+/* VARIÁVEIS (certifique-se de que estão definidas globalmente ou importe aqui) */
+/* Se você já tem essas variáveis em um arquivo global, não precisa duplicá-las aqui. */
+:root {
+    --cor-primaria: #0070f3;
+    --cor-primaria-texto: #fff;
+    --cor-gradiente: linear-gradient(90deg, #0070f3 0%, #00c6ff 100%);
+    --cor-fundo: #111; /* Fundo geral da página */
+    --cor-card: #1a1a1a; /* Fundo para cards e elementos escuros */
+    --cor-borda: #333; /* Borda para elementos */
+    --cor-texto-principal: #f0f0f0;
+    --cor-texto-secundario: #aaa;
+    --sombra-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --sombra-card-hover: 0 10px 20px rgba(0, 0, 0, 0.2);
+    --brilho-card-hover: 0 0 20px rgba(0, 112, 243, 0.3);
+
+    /* Cores adicionais para este card específico */
+    --detail-card-bg: #1f1f1f; /* Fundo um pouco mais claro que o geral */
+    --detail-card-border: #0070f3; /* Borda azul destacada */
+    --skill-tag-bg: #2a2a2a; /* Fundo das tags de habilidade */
+    --skill-tag-border: #444; /* Borda das tags */
+    --propose-button-text: #fff; /* Texto do botão de proposta */
+}
+
+.project-detail-card-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem; /* Padding para garantir espaço nas bordas da tela */
+    max-width: 900px; /* Para não ficar muito largo em telas grandes */
+    margin: 2rem auto; /* Centraliza o card na página */
+}
+
+.project-detail-card {
+    background-color: var(--detail-card-bg);
+    border: 2px solid var(--detail-card-border); /* Borda azul mais proeminente */
+    border-radius: 16px; /* Bordas mais arredondadas */
+    padding: 2.5rem; /* Espaçamento interno generoso */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 112, 243, 0.3); /* Sombra e brilho */
+    width: 100%;
+    max-width: 700px; /* Largura máxima para legibilidade */
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem; /* Espaçamento entre as seções */
+    color: var(--cor-texto-principal);
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha o título e o botão no topo */
+    gap: 1rem;
+    flex-wrap: wrap; /* Permite que o botão quebre a linha em telas menores */
+}
+
+.detail-title {
+    font-size: 2.4rem; /* Título maior e mais visível */
+    font-weight: 700;
+    color: var(--cor-texto-principal);
+    margin: 0;
+    line-height: 1.2;
+    flex-grow: 1; /* Permite que o título ocupe o espaço disponível */
+}
+
+.propose-button {
+    background: var(--cor-gradiente); /* Gradiente do seu tema */
+    color: var(--propose-button-text);
+    border: 1px solid var(--cor-primaria); /* Borda sutil para consistência */
+    border-radius: 10px; /* Mais arredondado */
+    padding: 1rem 2rem; /* Padding maior para ser mais clicável */
+    font-size: 1.1rem; /* Texto maior */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap; /* Impede que o texto quebre */
+}
+
+.propose-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 15px rgba(0, 112, 243, 0.5), 0 0 25px rgba(0, 112, 243, 0.4);
+}
+
+.detail-description {
+    font-size: 1.15rem; /* Descrição com texto confortável para leitura */
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.detail-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem; /* Espaçamento entre as tags */
+    margin-top: 1.5rem; /* Espaço acima das tags */
+}
+
+.detail-skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--skill-tag-bg);
+    border: 1px solid var(--skill-tag-border);
+    color: var(--cor-texto-principal);
+    padding: 0.7rem 1.2rem; /* Padding generoso */
+    border-radius: 8px; /* Mais quadrado, moderno */
+    font-size: 1rem;
+    font-weight: 500;
+    transition: transform 0.2s ease-in-out;
+}
+
+.detail-skill-tag:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.skill-icon {
+    width: 24px; /* Tamanho do ícone */
+    height: 24px;
+    filter: drop-shadow(0 0 3px rgba(0, 112, 243, 0.5)); /* Pequeno brilho para o ícone */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .project-detail-card {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    .detail-header {
+        flex-direction: column;
+        align-items: stretch; /* Estica o botão para largura total */
+    }
+    .detail-title {
+        font-size: 1.8rem;
+    }
+    .propose-button {
+        width: 100%; /* Botão ocupa 100% da largura em telas menores */
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    .detail-description {
+        font-size: 1rem;
+    }
+    .detail-skill-tag {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    .skill-icon {
+        width: 20px;
+        height: 20px;
+    }
+}

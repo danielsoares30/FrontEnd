@@ -1,0 +1,183 @@
+/* Ficheiro: src/assets/styles/configuracoes.css */
+
+/* --- ESTRUTURA PRINCIPAL DA PÁGINA --- */
+.settings-page {
+    max-width: 900px;
+    margin: 2rem auto; /* Centraliza a página com margem */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem; /* Espaço entre as secções */
+  }
+  
+  .page-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--cor-texto-principal);
+    margin-bottom: 0.5rem;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+  }
+  
+  
+  /* --- CARTÃO DE CONFIGURAÇÃO --- */
+  .settings-card {
+    background-color: var(--cor-card);
+    border-radius: var(--raio-borda);
+    border: 1px solid var(--cor-borda);
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .settings-card-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+  
+  .settings-card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin: 0;
+  }
+  
+  /* --- ESTILOS DE FORMULÁRIO (HERDADOS DO LOGIN) --- */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background-color: var(--cor-fundo-input);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda);
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px var(--cor-primaria-foco);
+  }
+  
+  .form-group input:disabled {
+    background-color: var(--cor-fundo-desativado);
+    cursor: not-allowed;
+  }
+  
+  /* --- BOTÕES --- */
+  .btn-container {
+      margin-top: 2rem;
+      text-align: right;
+  }
+  
+  .btn {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: var(--raio-borda);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn:hover {
+    background-color: var(--cor-primaria-hover);
+  }
+  
+  .btn-secondary {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto-principal);
+  }
+  
+  .btn-secondary:hover {
+      background-color: #4b5563; /* Um pouco mais escuro */
+  }
+  
+  /* --- ITEM DE CONFIGURAÇÃO (LABEL + TOGGLE) --- */
+  .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+  
+  .setting-item:first-of-type {
+      padding-top: 0;
+  }
+  
+  .setting-item:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .setting-item-text h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cor-texto-principal);
+  }
+  
+  .setting-item-text p {
+      margin: 0.25rem 0 0;
+      font-size: 0.9rem;
+      color: var(--cor-texto-secundario);
+  }
+  
+  
+  /* --- INTERRUPTOR (TOGGLE SWITCH) --- */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+  }
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--cor-borda);
+    transition: .4s;
+    border-radius: 28px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: var(--cor-primaria);
+  }
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+  

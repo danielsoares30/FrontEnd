@@ -1,0 +1,198 @@
+/* Ficheiro: src/assets/styles/encontrarFreelancer.css */
+
+/* --- VARIÁVEIS DE COR --- */
+:root {
+    --cor-fundo-geral: #111;
+    --cor-fundo-card: #1a1a1a;
+    --cor-borda-card: #333;
+    --cor-texto-principal: #f0f0f0;
+    --cor-texto-secundario: #aaa;
+    --cor-primaria: #0070f3;
+    --cor-primaria-hover: #005bb5;
+    --cor-acento: #ff9800; /* Cor para a estrela e outros destaques */
+    --sombra-leve: 0 2px 5px rgba(0, 0, 0, 0.2);
+    --sombra-forte: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --cor-fundo-geral: #f0f2f5;
+        --cor-fundo-card: #fff;
+        --cor-borda-card: #e0e0e0;
+        --cor-texto-principal: #2c3e50;
+        --cor-texto-secundario: #555;
+        --cor-primaria: #0070f3;
+        --cor-primaria-hover: #005bb5;
+        --cor-acento: #ff9800;
+        --sombra-leve: 0 2px 5px rgba(0, 0, 0, 0.1);
+        --sombra-forte: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+}
+
+
+/* --- LAYOUT GERAL --- */
+.freelancer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    background-color: var(--cor-fundo-geral);
+    color: var(--cor-texto-principal);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-top: 2rem;
+    box-shadow: var(--sombra-leve);
+}
+
+.search-bar svg {
+    color: var(--cor-texto-secundario);
+}
+
+.search-bar input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--cor-texto-principal);
+    font-size: 1rem;
+    outline: none;
+}
+.search-bar input::placeholder {
+    color: var(--cor-texto-secundario);
+}
+
+.freelancer-list {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* --- ESTILO DO CARD DO FREELANCER --- */
+.freelancer-card {
+    background-color: var(--cor-fundo-card);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--sombra-forte);
+    transition: transform 0.2s ease-in-out;
+}
+
+.freelancer-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cor-primaria);
+}
+
+.freelancer-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.freelancer-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--cor-acento); /* Destaque na foto */
+}
+
+.freelancer-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.freelancer-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--cor-primaria);
+}
+
+.freelancer-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--cor-acento);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.2rem;
+}
+
+.invite-btn {
+    background-color: var(--cor-primaria);
+    color: var(--cor-primaria-texto);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap; /* Impede quebra de linha */
+}
+
+.invite-btn:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+.freelancer-specialty {
+    font-size: 1.2rem;
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.freelancer-description {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.6;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.freelancer-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+}
+
+.freelancer-metadata span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    .freelancer-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .freelancer-info {
+        align-items: center;
+    }
+    
+    .invite-btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
