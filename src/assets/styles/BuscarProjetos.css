@@ -2,9 +2,9 @@
 
 /* --- VARIÁVEIS DE COR PARA MODO ESCURO (padrão) --- */
 :root {
-    --cor-primaria: #0070f3;
-    --cor-primaria-texto: #fff;
-    --cor-gradiente: linear-gradient(90deg, #0070f3 0%, #00c6ff 100%);
+    --cor-primaria: #ffff00;
+    --cor-primaria-texto: #1a1a1a; /* Ajustado para preto para contraste */
+    --cor-gradiente: linear-gradient(90deg, #ffff00 0%, #ffcc00 100%); /* Novo gradiente de amarelo */
 
     /* Cores do tema escuro */
     --cor-fundo-geral: #111;
@@ -15,10 +15,11 @@
     --cor-fundo-tag: #2c2c2c;
     --cor-borda-tag: #444;
     --cor-texto-tag: #f0f0f0;
+    --pacman-amarelo: #f7e100;
     
     --sombra-card: 0 4px 6px rgba(0, 0, 0, 0.1);
     --sombra-card-hover: 0 10px 20px rgba(0, 0, 0, 0.2);
-    --brilho-card-hover: 0 0 20px rgba(0, 112, 243, 0.3);
+    --brilho-card-hover: 0 0 20px rgba(255, 255, 0, 0.3); /* Brilho amarelo */
 }
 
 /* --- VARIÁVEIS DE COR PARA MODO CLARO --- */
@@ -37,6 +38,7 @@
         --cor-fundo-tag: #f0f4f7;
         --cor-borda-tag: #c9d8e3;
         --cor-texto-tag: #444;
+        --pacman-amarelo: #f7e100;
 
         --sombra-card: 0 4px 10px rgba(0, 0, 0, 0.08);
         --sombra-card-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -142,15 +144,50 @@ html {
     line-height: 1;
 }
 
-/* --- Elegant Divider --- */
-.elegant-divider {
+/* --- DIVISOR PAC-MAN --- */
+.pacman-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
     width: 100%;
-    height: 4px;
-    background: var(--cor-gradiente);
-    border-radius: 2px;
-    margin: 2rem 0;
-    box-shadow: 0 2px 8px rgba(0, 112, 243, 0.3);
 }
+.pacman {
+    width: 0;
+    height: 0;
+    border-right: 30px solid transparent;
+    border-top: 30px solid var(--pacman-amarelo);
+    border-left: 30px solid var(--pacman-amarelo);
+    border-bottom: 30px solid var(--pacman-amarelo);
+    border-radius: 50%;
+    animation: eat 0.7s linear infinite;
+}
+@keyframes eat {
+    0% { border-right-color: transparent; }
+    25% { border-right-color: var(--pacman-amarelo); }
+    50% { border-right-color: transparent; }
+    75% { border-right-color: var(--pacman-amarelo); }
+    100% { border-right-color: transparent; }
+}
+.pellets-container {
+    display: flex;
+    gap: 15px;
+    margin-left: 15px;
+}
+.pellet {
+    width: 10px;
+    height: 10px;
+    background-color: var(--pacman-amarelo);
+    border-radius: 50%;
+    animation: fadePellet 0.7s linear infinite;
+}
+@keyframes fadePellet {
+    0% { opacity: 1; transform: scale(1); }
+    49% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(0); }
+    100% { opacity: 0; transform: scale(0); }
+}
+
 
 /* --- LISTA E CARDS DE PROJETO --- */
 .project-list {
@@ -159,7 +196,6 @@ html {
     margin-top: 2.5rem; 
 }
 
-/* NOVO LAYOUT DO CARD */
 .project-card {
     background-color: var(--cor-fundo-card);
     border: 2px solid var(--cor-borda-card);
@@ -246,7 +282,7 @@ html {
     background: var(--cor-gradiente);
     color: var(--cor-primaria-texto);
     border-color: transparent;
-    box-shadow: 0 4px 10px rgba(0, 112, 243, 0.4);
+    box-shadow: 0 4px 10px rgba(255, 255, 0, 0.4); /* Sombra amarela */
 }
 
 /* Escondendo elementos que não estão mais no ProjectCard */

@@ -1,9 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom'; // Importado o Link
 import GhostNoResults from '../components/GhostNoResults.jsx';
 import '../assets/styles/buscarProjetos.css';
-import '../pages/PaginaProposta.jsx'
-
 
 // --- ÍCONES (SVG embutido para simplicidade) ---
 const IconSearch = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>;
@@ -121,10 +118,7 @@ const ProjectCard = ({ id, title, description, skills }) => (
             </div>
         </div>
         <div className="card-action">
-            {/* O BOTÃO AGORA É UM LINK QUE PASSA O ID DO PROJETO */}
-            <Link to={`/pagina-propostas`} className="proposta-btn">
-                Faça sua proposta
-            </Link>
+            <button className="proposta-btn">Faça sua proposta</button>
         </div>
     </article>
 );
@@ -158,10 +152,24 @@ const Pagination = ({ projectsPerPage, totalProjects, currentPage, paginate }) =
     );
 };
 
+const PacManDivider = () => {
+    const pellets = Array(15).fill(0);
+    return (
+        <div className="pacman-divider">
+            <div className="pacman"></div>
+            <div className="pellets-container">
+                {pellets.map((_, index) => (
+                    <div key={index} className="pellet"></div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 const BuscarProjetos = () => {
     const [filters, setFilters] = useState({ skills: [] });
     const [currentPage, setCurrentPage] = useState(1);
-    const projectsPerPage = 5; // Define quantas vagas por página
+    const projectsPerPage = 5;
 
     const filteredProjects = useMemo(() => {
         if (filters.skills.length === 0) {
@@ -176,7 +184,6 @@ const BuscarProjetos = () => {
         );
     }, [filters]);
 
-    // Lógica da Paginação
     const indexOfLastProject = currentPage * projectsPerPage;
     const indexOfFirstProject = indexOfLastProject - projectsPerPage;
     const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
@@ -184,7 +191,7 @@ const BuscarProjetos = () => {
     const paginate = (pageNumber) => {
         if (pageNumber > 0 && pageNumber <= Math.ceil(filteredProjects.length / projectsPerPage)) {
             setCurrentPage(pageNumber);
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Volta ao topo da página ao mudar
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -198,15 +205,14 @@ const BuscarProjetos = () => {
                 
                 <FilterBar filters={filters} setFilters={setFilters} />
                 
-                {/* O divisor elegante entra aqui! */}
-                <div className="elegant-divider"></div>
+                <PacManDivider />
     
                 <main className="project-list">
                     {currentProjects.length > 0 ? (
                         currentProjects.map(project => (
                             <ProjectCard 
                                 key={project.id} 
-                                id={project.id} // Passa o ID do projeto para o ProjectCard
+                                id={project.id}
                                 title={project.title} 
                                 description={project.description} 
                                 skills={project.skills} 
