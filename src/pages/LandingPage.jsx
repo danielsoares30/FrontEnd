@@ -1,10 +1,9 @@
-// Ficheiro: src/pages/LandingPage.jsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion'; // <-- A CORREÇÃO ESTÁ AQUI
 
 // 1. IMPORTE TODAS AS SUAS IMAGENS AQUI
-// Certifique-se de que os nomes dos ficheiros correspondem aos que estão na sua pasta src/assets/images/
 import logoImage from '../assets/images/landingpage/logo.png';
 import bannerImage from '../assets/images/landingpage/banner.png';
 import contratarImage from '../assets/images/landingpage/contratar.jpg';
@@ -14,7 +13,7 @@ import iconInbox from '../assets/images/landingpage/icones/image-removebg-previe
 import iconCheck from '../assets/images/landingpage/icones/marca-de-verificacao.png';
 import iconMoney from '../assets/images/landingpage/icones/money-bag.png';
 
-// Importe o seu ficheiro de estilo da landing page
+// Importe o seu ficheiro de estilo
 import '../assets/styles/landing.css'; 
 
 // Componente interno para as tags de tecnologia
@@ -25,198 +24,266 @@ const TechTag = ({ iconSrc, name }) => (
   </span>
 );
 
-const LandingPage = () => {
-  // Estado para controlar o tema (claro/escuro)
-  const [isDarkMode, setIsDarkMode] = useState(true);
+// Componente para o Card com efeito 3D
+const TiltCard = ({ children, className }) => {
+  const ref = useRef(null);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
-  // Efeito para aplicar a classe do tema no body e salvar a preferência
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const x = (e.clientX - left - width / 2) / 25;
+    const y = (e.clientY - top - height / 2) / 25;
+    setCoords({ x, y });
+  };
+
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setCoords({ x: 0, y: 0 });
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      className={`choice-card ${className || ''}`}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: 'preserve-3d',
+        transition: 'transform 0.1s linear',
+      }}
+      animate={{
+        transform: `perspective(1000px) rotateY(${coords.x}deg) rotateX(${-coords.y}deg) scale(1.05)`,
+      }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <div className="shine-effect" style={{
+        opacity: isHovering ? 1 : 0,
+        background: `radial-gradient(circle at ${coords.x * 5 + 50}% ${coords.y * 5 + 50}%, rgba(255, 255, 255, 0.15), transparent 40%)`,
+        transition: 'opacity 0.2s',
+      }}></div>
+      {children}
+    </motion.div>
+  );
+};
+
+
+const LandingPage = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const body = document.body;
-    const theme = isDarkMode ? 'dark' : 'light';
-    body.className = isDarkMode ? 'dark-mode' : '';
-    localStorage.setItem('theme', theme);
+    document.body.className = isDarkMode ? 'dark-mode' : '';
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  // Efeito para gerir a animação de scroll
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach(el => observer.observe(el));
-    return () => elements.forEach(el => observer.unobserve(el));
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
 
   return (
     <>
-      <header id="cabeçalho">
-        <img id="logo" src={logoImage} alt="Logo Freellaner" />
-        <ul>
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#sobre">Sobre nós</a></li>
-        </ul>
-        <label className="switch">
-          <input 
-            type="checkbox" 
-            id="theme-toggle-input" 
-            checked={isDarkMode}
-            onChange={() => setIsDarkMode(!isDarkMode)}
-          />
-          <span className="slider"></span>
-        </label>
-        <button className="Login">
-          <Link to="/login">Login</Link>
-        </button>
+      <header id="cabeçalho" className={scrolled ? 'scrolled' : ''}>
+        <Link to="/"><img id="logo" src={logoImage} alt="Logo Freellaner" /></Link>
+        <nav>
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">Sobre nós</a></li>
+          </ul>
+        </nav>
+        <div className="header-actions">
+          <label className="switch">
+            <input type="checkbox" id="theme-toggle-input" checked={isDarkMode} onChange={() => setIsDarkMode(!isDarkMode)} />
+            <span className="slider"></span>
+          </label>
+          <button className="Login"><Link to="/login">Login</Link></button>
+        </div>
       </header> 
 
       <main>
-        <section id="banner" className="reveal-on-scroll">
+        <motion.section 
+          id="banner"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
           <div className="banner-content">
-            <h2 className="titulo1">Contrate ou preste <br />serviços. Tudo em <br /> um só lugar</h2>
-            <h5>Encontre freelancers talentosos ou <br /> ganhe dinheiro com as suas habilidades <br /> com uma única conta.</h5>
-            <div className="banner-buttons">
-              <button className="serviços">
-                <Link to="/cadastro">Explorar Serviços</Link>
-              </button>
-              <button className="btnlogin">
-                <Link to="/login">Login</Link>
-              </button>
-            </div>
+            <motion.h2 variants={itemVariants} className="titulo1">Contrate ou preste serviços. <span>Tudo em um só lugar</span></motion.h2>
+            <motion.h5 variants={itemVariants}>Encontre freelancers talentosos ou ganhe dinheiro com as suas habilidades com uma única conta.</motion.h5>
+            <motion.div variants={itemVariants} className="banner-buttons">
+              <button className="serviços"><Link to="/cadastro">Explorar Serviços</Link></button>
+              <button className="btnlogin"><Link to="/login">Login</Link></button>
+            </motion.div>
           </div>
-          <img className="banner-image" src={bannerImage} alt="Ilustração de trabalho freelancer" />
-        </section>
+          <motion.img variants={itemVariants} className="banner-image" src={bannerImage} alt="Ilustração de trabalho freelancer" />
+        </motion.section>
 
         <section className="cards-section">
-            <div id="container1" className="reveal-on-scroll">
-                <h4 id="titulo2">Eu quero contratar</h4>
-                <h2 id="dev1">Desenvolvedor</h2>
-                <h5 id="sub2">Encontre freelancers <br /> talentosos para o seu <br /> projeto em poucos cliques.</h5>
-                <img src={contratarImage} alt="Contratante" />
-            </div>
-            
-            <div id="container2" className="reveal-on-scroll">
-                <h4 id="titulo3">Eu quero trabalhar como</h4>
-                <h2 id="dev2">Freelancer</h2>
-                <h5 id="sub3">Ganhe renda extra ou até <br /> a sua principal renda como <br />freelancer de programação</h5>
-                <img src={trabalharImage} alt="Freelancer" />
-            </div>
+          <TiltCard>
+            <h4>Eu quero contratar</h4>
+            <h2 className="dev-title">Desenvolvedor</h2>
+            <h5>Encontre freelancers talentosos para o seu projeto em poucos cliques.</h5>
+            <img src={contratarImage} alt="Contratante" />
+          </TiltCard>
+          
+          <TiltCard>
+            <h4>Eu quero trabalhar como</h4>
+            <h2 className="dev-title">Freelancer</h2>
+            <h5>Ganhe renda extra ou até a sua principal renda como freelancer de programação.</h5>
+            <img src={trabalharImage} alt="Freelancer" />
+          </TiltCard>
         </section>
 
-        <section className="informações reveal-on-scroll">
-            <h2 className="funciona">Como funciona?</h2>
-            <div className="info-cards-container">
-                <div id="card1">
-                    <img src={iconUpload} alt="Ícone de upload" />
-                    <h5 className="uploadh5">Publique ou ofereça <br /> um serviço</h5>
-                </div>
-                <div id="card2">
-                    <img src={iconInbox} alt="Ícone de caixa de entrada" />
-                    <h5 className="inboxh5">Receba propostas <br /> ou pedidos</h5>
-                </div>
-                <div id="card3">
-                    <img src={iconCheck} alt="Ícone de verificação" />
-                    <h5 className="checkh5">Negocie e inicie <br />o trabalho</h5>
-                </div>
-                <div id="card4">
-                    <img src={iconMoney} alt="Ícone de dinheiro" />
-                    <h5 className="moneyh5">Pague e receba <br />com segurança</h5>
-                </div>
-            </div>
-        </section>
+        <motion.section 
+          className="informações"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <h2 className="section-title">Como funciona?</h2>
+          <div className="info-cards-container">
+            <motion.div variants={itemVariants} className="info-card">
+              <img src={iconUpload} alt="Ícone de upload" />
+              <h5 className="info-card-title">Publique ou ofereça um serviço</h5>
+            </motion.div>
+            <motion.div variants={itemVariants} className="info-card">
+              <img src={iconInbox} alt="Ícone de caixa de entrada" />
+              <h5 className="info-card-title">Receba propostas ou pedidos</h5>
+            </motion.div>
+            <motion.div variants={itemVariants} className="info-card">
+              <img src={iconCheck} alt="Ícone de verificação" />
+              <h5 className="info-card-title">Negocie e inicie o trabalho</h5>
+            </motion.div>
+            <motion.div variants={itemVariants} className="info-card">
+              <img src={iconMoney} alt="Ícone de dinheiro" />
+              <h5 className="info-card-title">Pague e receba com segurança</h5>
+            </motion.div>
+          </div>
+        </motion.section>
 
-        <section className="oportunidades-section">
-            <h2 id="oportunidades" className="reveal-on-scroll">Oportunidades</h2>
-            <div id="vagas" className="reveal-on-scroll">
-                <h3>Desenvolvedor FullStack</h3>
-                <h5 className="salario">R$6.000,00 - R$7.000,00</h5>
-                <h5 className="local">Remoto</h5>
-                <div className="container-linguagens">
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" name="HTML" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" name="CSS" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" name="JS" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" name="React" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" name="SQL" />
-                </div>
+        <motion.section 
+          className="oportunidades-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <h2 className="section-title">Oportunidades Populares</h2>
+          <motion.div variants={itemVariants} className="vaga-card">
+            <h3>Desenvolvedor FullStack</h3>
+            <h5 className="salario">R$6.000,00 - R$7.000,00</h5>
+            <h5 className="local">Remoto</h5>
+            <div className="container-linguagens">
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" name="HTML" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" name="CSS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" name="JS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" name="React" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" name="SQL" />
             </div>
-             <div id="vaga2" className="reveal-on-scroll">
-                <h3>Desenvolvedor FrontEnd</h3>
-                <h5 className="salario">R$3.500,00 - R$4.000,00</h5>
-                <h5 className="local">Remoto</h5>
-                <div className="container-linguagens">
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" name="HTML" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" name="CSS" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" name="JS" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" name="React" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
-                </div>
-                </div>
-                <div id="vaga3" className="reveal-on-scroll">
-                <h3>Desenvolvedor BackEnd</h3>
-                <h5 className="salario">R$4.500,00 - R$5000,00</h5>
-                <h5 className="local">Remoto</h5>
-                <div className="container-linguagens">
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" name="SQL" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" name="Java" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" name="Spring" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" name="AWS" />
-                    <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
-                </div>
+          </motion.div>
+          <motion.div variants={itemVariants} className="vaga-card">
+            <h3>Desenvolvedor FrontEnd</h3>
+            <h5 className="salario">R$3.500,00 - R$4.000,00</h5>
+            <h5 className="local">Remoto</h5>
+            <div className="container-linguagens">
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" name="HTML" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" name="CSS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" name="JS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" name="React" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
             </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
-        <section className="faq-section reveal-on-scroll">
-            <h2 className="section-title">Você ainda tem dúvidas?</h2>
-            
-            <div className="faq-card">
-                <h3 className="faq-question">❓ 1. Preciso de duas contas para contratar e trabalhar?</h3>
-                <p className="faq-answer">Não. Com apenas uma conta, você pode tanto contratar freelancers quanto oferecer os seus serviços. Basta alternar entre as funções no seu painel.</p>
-            </div>
+        <motion.section 
+          className="faq-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <h2 className="section-title">Você ainda tem dúvidas?</h2>
+          <motion.div variants={itemVariants} className="faq-card">
+            <h3 className="faq-question">❓ Preciso de duas contas para contratar e trabalhar?</h3>
+            <p className="faq-answer">Não. Com apenas uma conta, você pode tanto contratar freelancers quanto oferecer os seus serviços. Basta alternar entre as funções no seu painel.</p>
+          </motion.div>
+          <motion.div variants={itemVariants} className="faq-card">
+            <h3 className="faq-question">❓ Como funciona o pagamento?</h3>
+            <p className="faq-answer">O pagamento é processado com segurança pela plataforma. O cliente paga antecipadamente, o valor fica retido e só é liberado ao freelancer após a entrega e aprovação do serviço.</p>
+          </motion.div>
+        </motion.section>
 
-            <div className="faq-card">
-                <h3 className="faq-question">❓ 2. Como funciona o pagamento?</h3>
-                <p className="faq-answer">O pagamento é processado com segurança pela plataforma. O cliente paga antecipadamente, o valor fica retido e só é liberado ao freelancer após a entrega e aprovação do serviço.</p>
-            </div>
-
-            <div className="faq-card">
-                <h3 className="faq-question">❓ 3. É gratuito criar uma conta?</h3>
-                <p className="faq-answer">Sim! Criar a sua conta e publicar serviços ou projetos é totalmente gratuito. Você só paga (ou recebe) quando um serviço for contratado.</p>
-            </div>
-        </section>
-
-        <section className="cta-section reveal-on-scroll">
-            <h2 className="pronto">Pronto para começar?</h2>
-            <h4 className="subpronto">Junte-se a uma comunidade de freelancers e contratantes que confiam numa plataforma simples e segura.</h4>
-            <button className="conta"><Link to="/cadastro">Crie a sua conta gratuitamente</Link></button>
-        </section>
+        <motion.section 
+          className="cta-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 variants={itemVariants} className="cta-title">Pronto para começar?</motion.h2>
+          <motion.h4 variants={itemVariants} className="cta-subtitle">Junte-se a uma comunidade de freelancers e contratantes que confiam numa plataforma simples e segura.</motion.h4>
+          <motion.div variants={itemVariants}>
+            <button className="cta-button"><Link to="/cadastro">Crie sua conta gratuitamente</Link></button>
+          </motion.div>
+        </motion.section>
       </main>
 
       <footer className="site-footer">
         <div className="footer-container">
           <div className="footer-top">
             <div className="footer-col footer-col-logo">
-              <img id="logo" src={logoImage} alt="Logo Freellaner" />
+              <img id="logo-footer" src={logoImage} alt="Logo Freellaner" />
               <p className="logo-description">Conectando freelancers e clientes de forma simples e segura</p>
             </div>
             <div className="footer-col">
-              <h4>Quem Somos?</h4>
+              <h4>Empresa</h4>
               <nav><ul>
                 <li><a href="#">Sobre nós</a></li>
                 <li><a href="#">Políticas de privacidade</a></li>
                 <li><a href="#">Termos de Serviço</a></li>
               </ul></nav>
             </div>
-            {/* Adicione as outras colunas do footer aqui */}
+             <div className="footer-col">
+              <h4>Suporte</h4>
+              <nav><ul>
+                <li><a href="#">Central de Ajuda</a></li>
+                <li><a href="#">Fale Conosco</a></li>
+              </ul></nav>
+            </div>
           </div>
-          <div className="footer-divider"></div>
+          <div className="pacman-divider-container">
+            <div className="pacman"></div>
+            <div className="pacman-dots"></div>
+          </div>
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()}. Todos os direitos reservados</p>
+            <p>&copy; {new Date().getFullYear()} Freellaner. Todos os direitos reservados</p>
           </div>
         </div>
       </footer>

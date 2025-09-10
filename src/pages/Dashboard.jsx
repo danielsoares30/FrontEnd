@@ -1,88 +1,161 @@
 // Ficheiro: src/pages/Dashboard.jsx
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Chart from 'chart.js/auto';
-import { useAuth } from '../hooks/useAuth'; // 1. IMPORTA O HOOK para aceder ao utilizador
-import '../assets/styles/dashboard.css';
-import '../assets/styles/style.css';
+import { useAuth } from '../hooks/useAuth';
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+    FiHome, FiBriefcase, FiMessageSquare, FiSettings, FiBell, FiChevronDown, 
+    FiSearch, FiMenu, FiPlus, FiArrowRight, FiCheckCircle, FiClock
+} from 'react-icons/fi';
+
+import '../assets/styles/dashboard.css'; // O CSS também será totalmente substituído
+
+// --- COMPONENTES DA UI REFINADOS ---
+
+const Sidebar = ({ collapsed, setCollapsed }) => {
+    const [active, setActive] = useState('Início');
+    return (
+        <motion.aside 
+            className="sidebar" 
+            initial={false}
+            animate={{ width: collapsed ? 80 : 250 }}
+        >
+            <div className="sidebar-header" onClick={() => setCollapsed(!collapsed)}>
+                <AnimatePresence>
+                    {!collapsed && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Freellaner</motion.span>}
+                </AnimatePresence>
+                <FiMenu className="sidebar-toggle" />
+            </div>
+            <nav className="sidebar-nav">
+                {['Início', 'Projetos', 'Mensagens', 'Configurações'].map(item => (
+                    <a href="#" key={item} className={`nav-item ${active === item ? 'active' : ''}`} onClick={() => setActive(item)}>
+                        {item === 'Início' && <FiHome />}
+                        {item === 'Projetos' && <FiBriefcase />}
+                        {item === 'Mensagens' && <FiMessageSquare />}
+                        {item === 'Configurações' && <FiSettings />}
+                        {!collapsed && <span className="nav-text">{item}</span>}
+                        {active === item && <motion.div className="active-indicator" layoutId="activeIndicator" />}
+                    </a>
+                ))}
+            </nav>
+        </motion.aside>
+    );
+};
+
+const Header = ({ user, greeting }) => {
+    return (
+        <header className="dashboard-header">
+            <div className="welcome-section">
+                <h1>{greeting}, {user?.nome || 'Agatha'}!</h1>
+                <p>Você tem 2 mensagens não lidas e 1 tarefa pendente.</p>
+            </div>
+            <div className="header-actions-dashboard">
+                <button className="action-button secondary"><FiMessageSquare /> Ver Mensagens</button>
+                <button className="action-button primary"><FiPlus /> Novo Projeto</button>
+            </div>
+        </header>
+    );
+};
+
+const ProjectCard = ({ project }) => {
+    const progress = project.progress;
+    return (
+        <div className="project-card">
+            <div className="project-header">
+                <span className="project-client">{project.client}</span>
+                <span className={`project-status status-${project.status.toLowerCase()}`}>{project.status}</span>
+            </div>
+            <h3 className="project-title">{project.title}</h3>
+            <div className="progress-bar-container">
+                <motion.div 
+                    className="progress-bar"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 1, ease: 'easeOut' }}
+                />
+            </div>
+            <div className="project-footer">
+                <span><FiClock /> {project.deadline}</span>
+                <span>{progress}%</span>
+            </div>
+        </div>
+    );
+};
+
+
+// --- COMPONENTE PRINCIPAL ---
 
 const Dashboard = () => {
-  const chartRef = useRef(null);
-  // 2. OBTEMOS OS DADOS DO UTILIZADOR LOGADO
-  const { user } = useAuth();
+    const { user } = useAuth(); // Assume que useAuth retorna um objeto de usuário ou null/undefined enquanto carrega
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    const [greeting, setGreeting] = useState('Olá');
 
-  useEffect(() => {
-    if (!chartRef.current) return;
-    const chart = new Chart(chartRef.current.getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-        datasets: [{
-          data: [500, 800, 1200, 900, 1500, 2000],
-          borderColor: 'var(--cor-primaria)',
-          backgroundColor: 'rgba(79, 70, 229, 0.1)',
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: 'var(--cor-primaria)',
-        }]
-      },
-      options: { /* ... opções do gráfico ... */ }
-    });
-    return () => chart.destroy();
-  }, []);
+    useEffect(() => {
+        const hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) setGreeting('Bom dia');
+        else if (hour >= 12 && hour < 18) setGreeting('Boa tarde');
+        else setGreeting('Boa noite');
 
-  const CtaIcon = () => (
-    <svg className="cta-icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path clipRule="evenodd" fillRule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" />
-      <path clipRule="evenodd" fillRule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" />
-    </svg>
-  );
+        // Lógica para o tema (pode ser movida para um hook ou contexto global)
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.className = savedTheme;
+    }, []);
 
-  return (
-    <div className="dashboard-container">
-      <div className="dashboard-card card-saldo">
-        <div className="card-header"><i className="fas fa-wallet"></i><h3>Saldo</h3></div>
-        <span className="card-value">R$ 1.250,00</span>
-      </div>
-      <div className="dashboard-card card-ganhos">
-        <div className="card-header"><i className="fas fa-chart-line"></i><h3>Ganhos</h3></div>
-        <span className="card-value">R$ 8.500,00</span>
-      </div>
-      <div className="dashboard-card card-nivel">
-        <div className="card-header"><i className="fas fa-award"></i><h3>Nível</h3></div>
-        <p>Você está no nível<strong className="card-value">Bronze</strong></p>
-      </div>
+    // Dados de exemplo para os projetos ativos
+    const activeProjects = [
+        { title: 'Desenvolvimento de App Mobile', client: 'TechCorp', progress: 75, deadline: '5 dias restantes', status: 'Em Andamento' },
+        { title: 'Website Institucional', client: 'Creative Co.', progress: 40, deadline: '12 dias restantes', status: 'Em Andamento' },
+        { title: 'Revisão de UI/UX', client: 'Designify', progress: 95, deadline: '2 dias restantes', status: 'Finalizando' },
+    ];
+    
+    // Animações
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+    };
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+    };
 
-      <div className="dashboard-card card-perfil">
-        <div className="card-header"><i className="fas fa-user-circle"></i><h3>Meu Perfil</h3></div>
-        {/* 3. USAMOS OS DADOS DO UTILIZADOR AQUI de forma segura */}
-        <p><strong>Nome:</strong> {user?.nome || 'Carregando...'}</p>
-        <p><strong>Email:</strong> {user?.email || 'Carregando...'}</p>
-        <Link to="/dashboard/perfil" className="edit-profile-link">Editar Perfil →</Link>
-      </div>
+    return (
+        <div className="dashboard-layout">
+            <Sidebar collapsed={isSidebarCollapsed} setCollapsed={setIsSidebarCollapsed} />
+            
+            <div className="content-wrapper">
+                <main className="dashboard-main">
+                    <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+                        <motion.div variants={itemVariants}>
+                            <Header user={user} greeting={greeting} />
+                        </motion.div>
 
-      <div className="dashboard-card card-atividades">
-        <div className="card-header"><i className="fas fa-history"></i><h3>Atividades Recentes</h3></div>
-        <ul className="activity-list">
-          <li>Venda concluída - R$ 500,00</li>
-          <li>Depósito recebido - R$ 200,00</li>
-          <li>Retirada - R$ 150,00</li>
-        </ul>
-      </div>
-      <div className="dashboard-card card-grafico">
-        <div className="card-header"><i className="fas fa-chart-bar"></i><h3>Gráfico de Ganhos</h3></div>
-        <div style={{ height: '250px' }}><canvas ref={chartRef}></canvas></div>
-      </div>
-      
-      <div className="dashboard-card cta-card">
-        <CtaIcon />
-        <h2 className="cta-title">Aqui você pode conferir todos os seus projetos em andamento</h2>
-        <p className="cta-subtitle">Falta muito pouco para dar início à sua experiência como freelancer!</p>
-        <button className="cta-button">Encontrar Projetos</button>
-      </div>
-    </div>
-  );
+                        <motion.section variants={itemVariants} className="dashboard-section">
+                            <h2 className="section-title">Projetos Ativos</h2>
+                            <div className="active-projects-grid">
+                                {activeProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)}
+                            </div>
+                        </motion.section>
+                        
+                        <motion.section variants={itemVariants} className="dashboard-section">
+                            <h2 className="section-title">Visão Financeira</h2>
+                            <div className="financial-grid">
+                                <div className="dashboard-card card-grafico">
+                                    {/* Componente do Gráfico de Ganhos iria aqui */}
+                                    <p>Gráfico de Ganhos (Line Chart)</p>
+                                </div>
+                                <div className="dashboard-card card-atividades">
+                                    {/* Componente de Atividades Recentes iria aqui */}
+                                    <p>Feed de Atividades</p>
+                                </div>
+                            </div>
+                        </motion.section>
+                    </motion.div>
+                </main>
+            </div>
+        </div>
+    );
 };
 
 export default Dashboard;
