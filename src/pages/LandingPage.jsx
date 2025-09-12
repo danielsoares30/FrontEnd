@@ -221,6 +221,18 @@ const LandingPage = () => {
                 <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
             </div>
           </motion.div>
+           <motion.div variants={itemVariants} className="vaga-card">
+            <h3>Desenvolvedor FrontEnd</h3>
+            <h5 className="salario">R$3.500,00 - R$4.000,00</h5>
+            <h5 className="local">Remoto</h5>
+            <div className="container-linguagens">
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" name="HTML" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" name="CSS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" name="JS" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" name="React" />
+                <TechTag iconSrc="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" name="Git" />
+            </div>
+          </motion.div>
         </motion.section>
 
         <motion.section 
@@ -234,6 +246,10 @@ const LandingPage = () => {
           <motion.div variants={itemVariants} className="faq-card">
             <h3 className="faq-question">❓ Preciso de duas contas para contratar e trabalhar?</h3>
             <p className="faq-answer">Não. Com apenas uma conta, você pode tanto contratar freelancers quanto oferecer os seus serviços. Basta alternar entre as funções no seu painel.</p>
+          </motion.div>
+          <motion.div variants={itemVariants} className="faq-card">
+            <h3 className="faq-question">❓ Como funciona o pagamento?</h3>
+            <p className="faq-answer">O pagamento é processado com segurança pela plataforma. O cliente paga antecipadamente, o valor fica retido e só é liberado ao freelancer após a entrega e aprovação do serviço.</p>
           </motion.div>
           <motion.div variants={itemVariants} className="faq-card">
             <h3 className="faq-question">❓ Como funciona o pagamento?</h3>

@@ -1,0 +1,129 @@
+/* Ficheiro: src/assets/styles/footer.css */
+
+.site-footer { /* Cor de fundo escura, mas não preta */
+  color: var(--cor-texto-secundario);
+  padding: 4rem 1.5rem 2rem;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 0.9rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.footer-column h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cor-texto-principal);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Coluna 1: Logo e Social */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cor-texto-principal);
+}
+
+.footer-logo img {
+  width: 36px;
+  height: 36px;
+}
+
+.footer-tagline {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: var(--cor-texto-secundario);
+  font-size: 1.25rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-links a:hover {
+  color: var(--cor-primaria);
+  transform: translateY(-2px);
+}
+
+/* Colunas 2 e 3: Links */
+.footer-column.links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-column.links a {
+  color: var(--cor-texto-secundario);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-column.links a:hover {
+  color: var(--cor-primaria);
+  text-decoration: underline;
+}
+
+/* Coluna 4: Newsletter */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.newsletter-form input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--cor-fundo-pagina);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  color: var(--cor-texto-principal);
+  font-size: 0.9rem;
+}
+
+.newsletter-form button {
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto-branco);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #2980b9;
+}
+
+/* Barra inferior */
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 0.85rem;
+}

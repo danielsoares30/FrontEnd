@@ -1,198 +1,129 @@
-/* Ficheiro: src/assets/styles/encontrarFreelancer.css */
-
-/* --- VARIÁVEIS DE COR --- */
+/* ========================================= */
+/* VARIÁVEIS DE COR UNIFICADAS               */
+/* ========================================= */
 :root {
-    --cor-fundo-geral: #111;
-    --cor-fundo-card: #1a1a1a;
-    --cor-borda-card: #333;
-    --cor-texto-principal: #f0f0f0;
-    --cor-texto-secundario: #aaa;
-    --cor-primaria: #0070f3;
-    --cor-primaria-hover: #005bb5;
-    --cor-acento: #ff9800; /* Cor para a estrela e outros destaques */
-    --sombra-leve: 0 2px 5px rgba(0, 0, 0, 0.2);
-    --sombra-forte: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-@media (prefers-color-scheme: light) {
-    :root {
-        --cor-fundo-geral: #f0f2f5;
-        --cor-fundo-card: #fff;
-        --cor-borda-card: #e0e0e0;
-        --cor-texto-principal: #2c3e50;
-        --cor-texto-secundario: #555;
-        --cor-primaria: #0070f3;
-        --cor-primaria-hover: #005bb5;
-        --cor-acento: #ff9800;
-        --sombra-leve: 0 2px 5px rgba(0, 0, 0, 0.1);
-        --sombra-forte: 0 4px 15px rgba(0, 0, 0, 0.15);
-    }
+  --cor-primaria: #3498DB;
+  --cor-destaque: #E58A40;
+  --cor-fundo-pagina: #111827;
+  --cor-fundo-card: #1F2937;
+  --cor-borda: #374151;
+  --cor-texto-principal: #F9FAFB;
+  --cor-texto-secundario: #9CA3AF;
+  --cor-texto-branco: #FFFFFF;
+  --sombra-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --raio-borda: 12px;
 }
 
-
-/* --- LAYOUT GERAL --- */
-.freelancer-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem;
-    background-color: var(--cor-fundo-geral);
-    color: var(--cor-texto-principal);
+/* ========================================= */
+/* LAYOUT GERAL DA PÁGINA                    */
+/* ========================================= */
+.freelancer-page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-.page-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+.encontrar-freelancers-container {
+  flex-grow: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
 }
 
-.page-header p {
-    font-size: 1.1rem;
-    color: var(--cor-texto-secundario);
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
+.page-header h1 { font-size: 2.5rem; color: var(--cor-texto-principal); margin-bottom: 0.5rem; }
+.page-header p { font-size: 1.1rem; color: var(--cor-texto-secundario); max-width: 600px; margin: 0 auto; }
 
 .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background-color: var(--cor-fundo-card);
-    border: 1px solid var(--cor-borda-card);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    margin-top: 2rem;
-    box-shadow: var(--sombra-leve);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--cor-fundo-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 2rem auto 0;
+  max-width: 700px;
 }
+.search-bar svg { color: var(--cor-texto-secundario); }
+.search-bar input { width: 100%; border: none; background: transparent; color: var(--cor-texto-principal); font-size: 1rem; outline: none; }
 
-.search-bar svg {
-    color: var(--cor-texto-secundario);
-}
+.search-page-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; align-items: start; }
 
-.search-bar input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    color: var(--cor-texto-principal);
-    font-size: 1rem;
-    outline: none;
-}
-.search-bar input::placeholder {
-    color: var(--cor-texto-secundario);
-}
+/* ========================================= */
+/* BARRA LATERAL DE FILTROS                  */
+/* ========================================= */
+.filter-sidebar { background-color: var(--cor-fundo-card); border: 1px solid var(--cor-borda); border-radius: var(--raio-borda); padding: 1.5rem; position: sticky; top: 2rem; }
+.filter-title { font-size: 1.25rem; font-weight: 600; color: var(--cor-texto-principal); margin: 0 0 1.5rem 0; padding-bottom: 1rem; border-bottom: 1px solid var(--cor-borda); }
+.filter-group { margin-bottom: 1.5rem; }
+.filter-group:last-child { margin-bottom: 0; }
+.filter-group h3 { font-size: 0.9rem; font-weight: 500; color: var(--cor-texto-secundario); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.filter-group select { width: 100%; padding: 0.75rem; background-color: var(--cor-fundo-card); border: 1px solid var(--cor-borda); border-radius: 8px; color: var(--cor-texto-principal); font-size: 0.9rem; }
+.filter-options { display: flex; flex-direction: column; gap: 0.75rem; }
 
+/* Estilos para Radio/Checkbox customizados (reutilizados) */
+.custom-radio, .custom-checkbox { display: flex; align-items: center; cursor: pointer; font-size: 0.9rem; color: var(--cor-texto-principal); }
+.custom-radio input, .custom-checkbox input { opacity: 0; width: 0; height: 0; position: absolute; }
+.radio-label, .checkbox-label { position: relative; padding-left: 28px; }
+.radio-label::before, .checkbox-label::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; border: 2px solid var(--cor-borda); background-color: var(--cor-fundo-pagina); transition: all 0.2s ease; }
+.radio-label::before { border-radius: 50%; }
+.custom-radio input:checked + .radio-label::before { background-color: var(--cor-primaria); border-color: var(--cor-primaria); }
+.radio-label::after { content: ''; position: absolute; left: 5px; top: 50%; transform: translateY(-50%) scale(0); width: 8px; height: 8px; border-radius: 50%; background: var(--cor-texto-branco); transition: transform 0.2s ease; }
+.custom-radio input:checked + .radio-label::after { transform: translateY(-50%) scale(1); }
+
+
+/* ========================================= */
+/* LISTA E CARDS DE FREELANCERS              */
+/* ========================================= */
 .freelancer-list {
-    display: grid;
-    gap: 2rem;
-    margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
 }
-
-/* --- ESTILO DO CARD DO FREELANCER --- */
 .freelancer-card {
-    background-color: var(--cor-fundo-card);
-    border: 1px solid var(--cor-borda-card);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: var(--sombra-forte);
-    transition: transform 0.2s ease-in-out;
+  background-color: var(--cor-fundo-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden; /* Garante que os cantos arredondados sejam mantidos */
 }
+.freelancer-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-card); border-color: var(--cor-primaria); }
 
-.freelancer-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--cor-primaria);
+.card-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+.freelancer-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.freelancer-photo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cor-borda); }
+.freelancer-info { flex-grow: 1; }
+.freelancer-name { font-size: 1.25rem; font-weight: 600; color: var(--cor-texto-principal); margin: 0; }
+.freelancer-rating { display: flex; align-items: center; gap: 0.4rem; color: var(--cor-destaque); font-size: 0.9rem; font-weight: 600; margin-top: 0.2rem; }
+.invite-btn { background-color: var(--cor-primaria); color: var(--cor-texto-branco); border: none; border-radius: 8px; padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background-color 0.2s ease; }
+.invite-btn:hover { background-color: #2980b9; }
+
+.freelancer-body { flex-grow: 1; display: flex; flex-direction: column; }
+.freelancer-specialty { font-size: 1.1rem; color: var(--cor-texto-principal); font-weight: 500; margin: 0; }
+.freelancer-description { font-size: 0.9rem; color: var(--cor-texto-secundario); line-height: 1.6; margin: 0.5rem 0 1rem; }
+.freelancer-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 1rem; }
+.skill-tag { background-color: var(--cor-fundo-pagina); border: 1px solid var(--cor-borda); color: var(--cor-texto-secundario); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; }
+
+.freelancer-footer {
+  background-color: var(--cor-fundo-pagina);
+  border-top: 1px solid var(--cor-borda);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
 }
+.freelancer-footer span { display: flex; align-items: center; gap: 0.4rem; }
 
-.freelancer-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-}
-
-.freelancer-photo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--cor-acento); /* Destaque na foto */
-}
-
-.freelancer-info {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.freelancer-name {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--cor-primaria);
-}
-
-.freelancer-rating {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--cor-acento);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0.2rem;
-}
-
-.invite-btn {
-    background-color: var(--cor-primaria);
-    color: var(--cor-primaria-texto);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap; /* Impede quebra de linha */
-}
-
-.invite-btn:hover {
-    background-color: var(--cor-primaria-hover);
-}
-
-.freelancer-specialty {
-    font-size: 1.2rem;
-    color: var(--cor-texto-principal);
-    font-weight: 500;
-    margin-top: 1rem;
-}
-
-.freelancer-description {
-    font-size: 1rem;
-    color: var(--cor-texto-secundario);
-    line-height: 1.6;
-    margin: 0.5rem 0 1.5rem;
-}
-
-.freelancer-metadata {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    color: var(--cor-texto-secundario);
-    font-size: 0.9rem;
-}
-
-.freelancer-metadata span {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-/* --- Responsividade --- */
-@media (max-width: 768px) {
-    .freelancer-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .freelancer-info {
-        align-items: center;
-    }
-    
-    .invite-btn {
-        width: 100%;
-        margin-top: 1rem;
-    }
-}
+/* ========================================= */
+/* RESPONSIVIDADE E PAGINAÇÃO                */
+/* ========================================= */
+.pagination-container { /* ... estilos da paginação ... */ }
+@media (max-width: 992px) { .search-page-layout { grid-template-columns: 1fr; } .filter-sidebar { position: static; margin-bottom: 2rem; } }
+@media (max-width: 768px) { .freelancer-list { grid-template-columns: 1fr; } }

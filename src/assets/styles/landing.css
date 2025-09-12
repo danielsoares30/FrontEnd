@@ -166,13 +166,13 @@ main section { padding: 6rem 5%; }
 .cta-subtitle { color: var(--cor-texto-secundario); max-width: 550px; margin: 1rem auto 2.5rem auto; line-height: 1.7; font-size: 1.1rem; }
 .cta-button { padding: 0; border-radius: 50px; border: none; background: var(--gradiente-destaque); cursor: pointer; box-shadow: var(--sombra-card-hover); }
 .cta-button a { display: block; padding: 1rem 2.5rem; color: var(--cor-texto-branco); font-weight: 600; font-size: 1.1rem; }
-.cta-button:hover { box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25); }
+.cta-button:hover { box-shadow: 0 10px 30px var(--cor-primaria) }
 
 
 /* ==========================================================================
    5. RODAPÉ
    ========================================================================== */
-.site-footer { padding: 4rem 5%; background-color: var(--cor-fundo-secao); color: var(--cor-texto-secundario); border-top: 1px solid var(--cor-borda); }
+.site-footer { padding: 4rem 5%; background-color: var(--cor-fundo); color: var(--cor-texto-secundario); border-top: 1px solid var(--cor-borda); }
 .footer-container { max-width: 1400px; margin: 0 auto; }
 .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.5rem; }
 .footer-col-logo { grid-column: auto; }
@@ -182,7 +182,7 @@ main section { padding: 6rem 5%; }
 .footer-col nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
 .footer-col nav ul li a { color: var(--cor-texto-secundario); text-decoration: none; transition: color .2s ease; }
 .footer-col nav ul li a:hover { color: var(--cor-primaria); text-decoration: underline; }
-.footer-divider { height: 1px; background-color: var(--cor-borda); border: none; margin: 2rem 0; }
+.footer-divider { height: 1px; background-color: var(--cor-fundo); border: none; margin: 2rem 0; }
 .footer-bottom { font-size: 0.9rem; text-align: center; }
 
 /* ==========================================================================

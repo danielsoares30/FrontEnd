@@ -1,50 +1,132 @@
-/* Sidebar */
+/* ========================================= */
+/* NOVO ESTILO DA SIDEBAR           */
+/* ========================================= */
+
+/* Variáveis de Cor Sugeridas (adicione ao seu CSS principal, ex: index.css) */
+:root {
+  --cor-primaria: #3498DB; /* Azul vibrante para destaque */
+  --cor-fundo-sidebar: #1F2937; /* Fundo grafite escuro */
+  --cor-fundo-hover: #374151; /* Fundo para hover e elementos sutis */
+  --cor-texto-principal: #E5E7EB; /* Texto principal (branco suave) */
+  --cor-texto-secundario: #9CA3AF; /* Texto secundário e ícones */
+  --cor-borda-sutil: #374151;
+  --cor-sombra: rgba(0, 0, 0, 0.2);
+}
+
+/* Estrutura principal da Sidebar */
 .sidebar {
-    width: 250px;
-    background-color: var(--cor-sidebar-fundo);
-    color: var(--cor-sidebar-texto);
-    padding: 20px;
-    box-shadow: 2px 0 5px var(--cor-sombra);
-    transition: background-color 0.3s ease;
+  width: 260px; /* Um pouco mais largo para mais respiro */
+  height: 100vh; /* Ocupa a altura total da tela */
+  background-color: var(--cor-fundo-sidebar);
+  color: var(--cor-texto-principal);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 0 10px var(--cor-sombra);
+  transition: width 0.3s ease; /* Para futuras animações de recolher */
 }
 
-.sidebar-header .logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    margin-bottom: 30px;
+/* Cabeçalho com o Logo */
+.sidebar-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--cor-borda-sutil);
+  margin-bottom: 1rem; /* Espaço após o cabeçalho */
 }
 
-.sidebar-header .logo i {
-    margin-right: 10px;
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 40px;
+  width: 40px;
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover .logo-image {
+  transform: rotate(15deg);
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-left: 12px;
+}
+
+/* Navegação e Links */
+.sidebar-nav {
+  flex-grow: 1; /* Faz a navegação ocupar o espaço restante */
+  padding: 0 1rem; /* Espaçamento lateral para os links */
 }
 
 .sidebar-nav ul {
-    list-style: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+/* Títulos de Seção (Ações, Gestão) */
+.nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 1.5rem 1rem 0.5rem; 
+  padding-left: 2.5rem;
+}
+
+
+/* Estilo padrão dos links de navegação */
 .sidebar-nav a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--cor-sidebar-texto);
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem; /* Mantenha o padding vertical e adicione o novo padding horizontal */
+  padding-left: 10px;
+  margin: 0.25rem 0; /* Espaço vertical entre os links */
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--cor-texto-principal);
+  font-weight: 500;
+  position: relative; /* Para o pseudo-elemento ::before */
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-left: 4px solid transparent; /* Borda transparente para manter o alinhamento */
 }
 
+/* Estilo dos Ícones */
 .sidebar-nav a i {
-    margin-right: 15px;
-    font-size: 1.1rem;
+  font-size: 1.2rem;
+  width: 25px; /* Largura fixa para alinhar o texto */
+  text-align: center;
+  margin-right: 1rem;
+  color: var(--cor-texto-secundario);
+  transition: color 0.2s ease;
 }
 
+/* Efeito Hover nos Links */
 .sidebar-nav a:hover {
-    background-color: var(--cor-sidebar-hover);
+  background-color: var(--cor-fundo-hover);
+  color: #FFFFFF; /* Texto fica branco puro no hover */
 }
 
+.sidebar-nav a:hover i {
+  color: #FFFFFF; /* Ícone também fica branco */
+}
+
+/* Estilo do Link Ativo (página atual) */
 .sidebar-nav a.active {
-    background-color: var(--cor-sidebar-active);
-    color: var(--cor-primaria);
-    font-weight: 600;
+  background-color: rgba(52, 152, 219, 0.1); /* Fundo azul bem sutil */
+  color: var(--cor-primaria);
+  font-weight: 600;
+  border-left: 4px solid var(--cor-primaria); /* Barra indicadora azul */
+  padding-left: 10px;      
+}
+
+.sidebar-nav a.active i {
+  color: var(--cor-primaria); /* Ícone fica azul */
 }

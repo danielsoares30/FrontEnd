@@ -24,3 +24,17 @@
   margin: 0 auto; /* Centraliza o container */
   box-sizing: border-box; /* Garante que o padding não aumente a largura total */
 }
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh; /* GARANTE QUE O LAYOUT OCUPE A ALTURA TOTAL DA TELA */
+  background-color: var(--cor-fundo-pagina); /* Usa a cor de fundo que já definimos */
+}
+.main-content-wrapper {
+  flex: 1; /* Faz esta coluna ocupar todo o espaço restante ao lado da Sidebar */
+  display: flex;
+  flex-direction: column; /* Organiza o conteúdo e o footer em uma coluna */
+}
+.page-content {
+  flex: 1; /* ESSA É A MÁGICA! Faz o conteúdo principal crescer e empurrar o footer para baixo */
+  /* O padding foi removido daqui para ser aplicado diretamente nas páginas, como já fizemos */
+}

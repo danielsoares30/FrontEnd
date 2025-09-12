@@ -1,161 +1,118 @@
 // Ficheiro: src/pages/Dashboard.jsx
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import Chart from 'chart.js/auto';
 import { useAuth } from '../hooks/useAuth';
-// eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-    FiHome, FiBriefcase, FiMessageSquare, FiSettings, FiBell, FiChevronDown, 
-    FiSearch, FiMenu, FiPlus, FiArrowRight, FiCheckCircle, FiClock
-} from 'react-icons/fi';
-
-import '../assets/styles/dashboard.css'; // O CSS também será totalmente substituído
-
-// --- COMPONENTES DA UI REFINADOS ---
-
-const Sidebar = ({ collapsed, setCollapsed }) => {
-    const [active, setActive] = useState('Início');
-    return (
-        <motion.aside 
-            className="sidebar" 
-            initial={false}
-            animate={{ width: collapsed ? 80 : 250 }}
-        >
-            <div className="sidebar-header" onClick={() => setCollapsed(!collapsed)}>
-                <AnimatePresence>
-                    {!collapsed && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>Freellaner</motion.span>}
-                </AnimatePresence>
-                <FiMenu className="sidebar-toggle" />
-            </div>
-            <nav className="sidebar-nav">
-                {['Início', 'Projetos', 'Mensagens', 'Configurações'].map(item => (
-                    <a href="#" key={item} className={`nav-item ${active === item ? 'active' : ''}`} onClick={() => setActive(item)}>
-                        {item === 'Início' && <FiHome />}
-                        {item === 'Projetos' && <FiBriefcase />}
-                        {item === 'Mensagens' && <FiMessageSquare />}
-                        {item === 'Configurações' && <FiSettings />}
-                        {!collapsed && <span className="nav-text">{item}</span>}
-                        {active === item && <motion.div className="active-indicator" layoutId="activeIndicator" />}
-                    </a>
-                ))}
-            </nav>
-        </motion.aside>
-    );
-};
-
-const Header = ({ user, greeting }) => {
-    return (
-        <header className="dashboard-header">
-            <div className="welcome-section">
-                <h1>{greeting}, {user?.nome || 'Agatha'}!</h1>
-                <p>Você tem 2 mensagens não lidas e 1 tarefa pendente.</p>
-            </div>
-            <div className="header-actions-dashboard">
-                <button className="action-button secondary"><FiMessageSquare /> Ver Mensagens</button>
-                <button className="action-button primary"><FiPlus /> Novo Projeto</button>
-            </div>
-        </header>
-    );
-};
-
-const ProjectCard = ({ project }) => {
-    const progress = project.progress;
-    return (
-        <div className="project-card">
-            <div className="project-header">
-                <span className="project-client">{project.client}</span>
-                <span className={`project-status status-${project.status.toLowerCase()}`}>{project.status}</span>
-            </div>
-            <h3 className="project-title">{project.title}</h3>
-            <div className="progress-bar-container">
-                <motion.div 
-                    className="progress-bar"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progress}%` }}
-                    transition={{ duration: 1, ease: 'easeOut' }}
-                />
-            </div>
-            <div className="project-footer">
-                <span><FiClock /> {project.deadline}</span>
-                <span>{progress}%</span>
-            </div>
-        </div>
-    );
-};
-
-
-// --- COMPONENTE PRINCIPAL ---
+import Footer from '../components/Footer'; // Import do Footer
+import '../assets/styles/dashboard.css'; // Import do CSS
 
 const Dashboard = () => {
-    const { user } = useAuth(); // Assume que useAuth retorna um objeto de usuário ou null/undefined enquanto carrega
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-    const [greeting, setGreeting] = useState('Olá');
+  const chartRef = useRef(null);
+  const { user } = useAuth();
 
-    useEffect(() => {
-        const hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) setGreeting('Bom dia');
-        else if (hour >= 12 && hour < 18) setGreeting('Boa tarde');
-        else setGreeting('Boa noite');
+  useEffect(() => {
+    // ... (lógica do gráfico permanece a mesma)
+    if (!chartRef.current) return;
+    const existingChart = Chart.getChart(chartRef.current);
+    if (existingChart) { existingChart.destroy(); }
+    const chart = new Chart(chartRef.current, {
+        type: 'line', data: { labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'], datasets: [{ label: 'Ganhos', data: [500, 800, 1200, 900, 1500, 2000], borderColor: '#3498DB', backgroundColor: 'rgba(52, 152, 219, 0.2)', fill: true, tension: 0.4, pointBackgroundColor: '#3498DB', pointBorderColor: '#fff', pointHoverRadius: 7, pointHoverBackgroundColor: '#fff', pointHoverBorderColor: '#3498DB', }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false, }, }, scales: { x: { grid: { display: false, }, ticks: { color: '#9CA3AF', }, }, y: { grid: { color: '#374151', }, ticks: { color: '#9CA3AF', callback: function(value) { return 'R$ ' + value; } }, }, }, }
+    });
+    return () => chart.destroy();
+  }, []);
 
-        // Lógica para o tema (pode ser movida para um hook ou contexto global)
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.body.className = savedTheme;
-    }, []);
+  const CtaIcon = () => (
+    <svg className="cta-icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path clipRule="evenodd" fillRule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z" />
+      <path clipRule="evenodd" fillRule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" />
+    </svg>
+  );
 
-    // Dados de exemplo para os projetos ativos
-    const activeProjects = [
-        { title: 'Desenvolvimento de App Mobile', client: 'TechCorp', progress: 75, deadline: '5 dias restantes', status: 'Em Andamento' },
-        { title: 'Website Institucional', client: 'Creative Co.', progress: 40, deadline: '12 dias restantes', status: 'Em Andamento' },
-        { title: 'Revisão de UI/UX', client: 'Designify', progress: 95, deadline: '2 dias restantes', status: 'Finalizando' },
-    ];
-    
-    // Animações
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-    };
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
-    };
+  return (
+    // NOVO: Contêiner principal para controlar o layout
+    <div className="dashboard-page-container">
+      <main className="dashboard-content">
+        {/* Cabeçalho de boas-vindas reintroduzido */}
+       
 
-    return (
-        <div className="dashboard-layout">
-            <Sidebar collapsed={isSidebarCollapsed} setCollapsed={setIsSidebarCollapsed} />
-            
-            <div className="content-wrapper">
-                <main className="dashboard-main">
-                    <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-                        <motion.div variants={itemVariants}>
-                            <Header user={user} greeting={greeting} />
-                        </motion.div>
-
-                        <motion.section variants={itemVariants} className="dashboard-section">
-                            <h2 className="section-title">Projetos Ativos</h2>
-                            <div className="active-projects-grid">
-                                {activeProjects.map((proj, i) => <ProjectCard key={i} project={proj} />)}
-                            </div>
-                        </motion.section>
-                        
-                        <motion.section variants={itemVariants} className="dashboard-section">
-                            <h2 className="section-title">Visão Financeira</h2>
-                            <div className="financial-grid">
-                                <div className="dashboard-card card-grafico">
-                                    {/* Componente do Gráfico de Ganhos iria aqui */}
-                                    <p>Gráfico de Ganhos (Line Chart)</p>
-                                </div>
-                                <div className="dashboard-card card-atividades">
-                                    {/* Componente de Atividades Recentes iria aqui */}
-                                    <p>Feed de Atividades</p>
-                                </div>
-                            </div>
-                        </motion.section>
-                    </motion.div>
-                </main>
+        <div className="dashboard-grid">
+          {/* Card Saldo */}
+          <div className="dashboard-card card-saldo">
+            <div className="card-header-main">
+              <div className="card-header"><i className="fas fa-wallet"></i><h3>Saldo Disponível</h3></div>
+              <button className="quick-action-button">Sacar</button>
             </div>
+            <span className="card-value">R$ 1.250,00</span>
+            <div className="card-trend positive"><i className="fas fa-arrow-up"></i><span>5.2% vs. mês anterior</span></div>
+          </div>
+
+          {/* Card Ganhos */}
+          <div className="dashboard-card card-ganhos">
+            <div className="card-header"><i className="fas fa-chart-line"></i><h3>Ganhos (Últimos 30 dias)</h3></div>
+            <span className="card-value">R$ 8.500,00</span>
+            <div className="card-trend positive"><i className="fas fa-arrow-up"></i><span>12.8% vs. mês anterior</span></div>
+          </div>
+
+          {/* Card Nível */}
+          <div className="dashboard-card card-nivel">
+            <div className="card-header"><i className="fas fa-award"></i><h3>Nível Bronze</h3></div>
+            <div className="progress-bar-container"><div className="progress-bar-fill" style={{width: '70%'}}></div></div>
+            <div className="progress-bar-text"><span>700 / 1000 XP para o nível Prata</span></div>
+          </div>
+
+          {/* Card Perfil */}
+          <div className="dashboard-card card-perfil">
+            <div className="card-header"><i className="fas fa-user-circle"></i><h3>Meu Perfil</h3></div>
+            <div className="perfil-info">
+              <p><strong>Nome:</strong> {user?.nome || 'Agatha'}</p>
+              <p><strong>Email:</strong> {user?.email || 'agatha@gmail.com'}</p>
+            </div>
+            <Link to="/dashboard/perfil" className="edit-profile-link">Editar Perfil <i className="fas fa-arrow-right"></i></Link>
+          </div>
+
+          {/* Card Atividades Recentes */}
+          <div className="dashboard-card card-atividades">
+            <div className="card-header"><i className="fas fa-history"></i><h3>Atividades Recentes</h3></div>
+            <ul className="activity-list">
+              <li>
+                <div className="activity-icon icon-positive"><i className="fas fa-check"></i></div>
+                <div className="activity-text"><span>Venda concluída</span><small>Projeto Web Design</small></div>
+                <span className="activity-value positive">+ R$ 500,00</span>
+              </li>
+              <li>
+                <div className="activity-icon icon-positive"><i className="fas fa-arrow-down"></i></div>
+                <div className="activity-text"><span>Depósito recebido</span><small>Adiantamento de Cliente</small></div>
+                <span className="activity-value positive">+ R$ 200,00</span>
+              </li>
+              <li>
+                <div className="activity-icon icon-negative"><i className="fas fa-arrow-up"></i></div>
+                <div className="activity-text"><span>Retirada para conta</span><small>Banco Inter</small></div>
+                <span className="activity-value negative">- R$ 150,00</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Card Gráfico */}
+          <div className="dashboard-card card-grafico">
+            <div className="card-header"><i className="fas fa-chart-bar"></i><h3>Gráfico de Ganhos</h3></div>
+            <div className="chart-container"><canvas ref={chartRef}></canvas></div>
+          </div>
+
+          {/* Card CTA */}
+          <div className="dashboard-card cta-card">
+            <CtaIcon />
+            <h2 className="cta-title">Encontre seu próximo projeto de sucesso</h2>
+            <p className="cta-subtitle">Milhares de oportunidades estão esperando por você. Dê o próximo passo!</p>
+            <Link to="/dashboard/buscar-projetos" className="cta-button">Encontrar Projetos</Link>
+          </div>
         </div>
-    );
+      </main>
+
+      {/* Footer integrado e posicionado corretamente */}
+      <Footer />
+    </div>
+  );
 };
 
 export default Dashboard;
