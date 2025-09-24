@@ -1,36 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
-// 1. IMPORTE TODAS AS SUAS IMAGENS AQUI
+// Imagens principais (você pode mantê-las ou substituir por links também)
 import logoImage from '../assets/images/landingpage/logo.png';
 import bannerImage from '../assets/images/landingpage/banner.png';
 import contratarImage from '../assets/images/landingpage/contratar.jpg';
 import trabalharImage from '../assets/images/landingpage/homem-no-computador.webp';
+
+// Ícones para a seção 'Como Funciona'
 import iconUpload from '../assets/images/landingpage/icones/Upload-removebg-preview.png';
 import iconInbox from '../assets/images/landingpage/icones/image-removebg-preview.png';
 import iconCheck from '../assets/images/landingpage/icones/marca-de-verificacao.png';
 import iconMoney from '../assets/images/landingpage/icones/money-bag.png';
 
-// Ícones para a seção de features
-const iconFlexibilidade = 'https://i.ibb.co/6Pqj39Z/flexibilidade.png';
-const iconSeguranca = 'https://i.ibb.co/6y4tW6n/seguranca.png';
-const iconComunidade = 'https://i.ibb.co/9rQ1WjC/comunidade.png';
-
-// Imagens para a seção de depoimentos (AGORA COM LINKS)
-const depoimento1 = 'https://i.ibb.co/P42yX4b/ana.jpg';
-const depoimento2 = 'https://i.ibb.co/6tN6j7C/carlos.jpg';
-const depoimento3 = 'https://i.ibb.co/S3qT2bC/julia.jpg';
+// Ícones para a seção de depoimentos (AGORA COM LINKS)
+const depoimento1 = 'https://i.ibb.co/bF9Fh3D/ana.jpg';
+const depoimento2 = 'https://i.ibb.co/pW1Q6g6/carlos.jpg';
+const depoimento3 = 'https://i.ibb.co/d7z1y1J/julia.jpg';
 
 // Importe o seu ficheiro de estilo
 import '../assets/styles/landing.css'; 
 
+// Ícones em formato SVG (NOVOS COMPONENTES)
+const FlexibilidadeIcon = () => (
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.2071 9.79289C17.5976 9.40237 17.5976 8.76921 17.2071 8.37868C16.8166 7.98816 16.1834 7.98816 15.7929 8.37868L12 12.1716L12 6C12 5.44772 11.5523 5 11 5C10.4477 5 10 5.44772 10 6L10 12.1716L6.20711 8.37868C5.81658 7.98816 5.18342 7.98816 4.79289 8.37868C4.40237 8.76921 4.40237 9.40237 4.79289 9.79289L10.5858 15.5858C10.9763 15.9763 11.6095 15.9763 12 15.5858L17.2071 9.79289ZM12 18.0001L15 15.0001H9L12 18.0001Z" fill="currentColor"/>
+    </svg>
+);
+
+const SegurancaIcon = () => (
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1L3 5V11C3 16.5 6.8 20.2 12 23C17.2 20.2 21 16.5 21 11V5L12 1ZM12 11.22C12 14 10.32 15.34 8.75 16.27C7.18 17.2 5.6 18.13 5 18.42V7.48L12 3.5L19 7.48V18.42C18.4 18.13 16.82 17.2 15.25 16.27C13.68 15.34 12 14 12 11.22Z" fill="currentColor"/>
+    </svg>
+);
+
+const ComunidadeIcon = () => (
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12 13C10.66 13 9.39 12.39 8.5 11.5L7 13C8.16 14.28 9.93 15 12 15C14.07 15 15.84 14.28 17 13L15.5 11.5C14.61 12.39 13.34 13 12 13ZM12 8.5C10.62 8.5 9.5 9.62 9.5 11C9.5 12.38 10.62 13.5 12 13.5C13.38 13.5 14.5 12.38 14.5 11C14.5 9.62 13.38 8.5 12 8.5Z" fill="currentColor"/>
+    </svg>
+);
+
+
 // Componente para a Section (novo)
-const Section = ({ id, title, children }) => (
+const Section = ({ id, title, children, hasBackground }) => (
   <motion.section
     id={id}
-    className="section-container"
+    className={`section-container ${hasBackground ? 'has-background' : ''}`}
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true, amount: 0.3 }}
@@ -135,13 +151,15 @@ const TestimonialCard = ({ quote, name, role, avatar }) => (
   </motion.div>
 );
 
-// Componente para o Card de Feature
-const FeatureCard = ({ icon, title, description }) => (
+// Componente para o Card de Feature (CORRIGIDO PARA USAR SVG)
+const FeatureCard = ({ icon: IconComponent, title, description }) => (
   <motion.div
     className="feature-card"
     variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
   >
-    <img src={icon} alt={`Ícone de ${title}`} className="feature-icon" />
+    <div className="feature-icon-wrapper">
+      <IconComponent />
+    </div>
     <h4 className="feature-title">{title}</h4>
     <p className="feature-description">{description}</p>
   </motion.div>
@@ -222,7 +240,7 @@ const LandingPage = () => {
           <motion.img variants={itemVariants} className="banner-image" src={bannerImage} alt="Ilustração de trabalho freelancer" />
         </motion.section>
 
-        <Section id="sobre" title="Junte-se à nossa comunidade">
+        <Section id="sobre" title="Junte-se à nossa comunidade" hasBackground>
           <div className="cards-section">
             <TiltCard>
               <div className="card-info">
@@ -246,24 +264,24 @@ const LandingPage = () => {
         <Section id="features" title="Por que nos escolher?">
           <motion.div className="features-container" variants={containerVariants}>
             <FeatureCard
-              icon={iconFlexibilidade}
+              icon={FlexibilidadeIcon}
               title="Flexibilidade Total"
               description="Escolha projetos que se encaixam na sua agenda e trabalhe de onde quiser. Para contratantes, adapte o serviço às suas necessidades."
             />
             <FeatureCard
-              icon={iconSeguranca}
+              icon={SegurancaIcon}
               title="Segurança Garantida"
               description="Nossa plataforma processa os pagamentos com segurança, garantindo que o freelancer receba e o cliente tenha o serviço entregue."
             />
             <FeatureCard
-              icon={iconComunidade}
+              icon={ComunidadeIcon}
               title="Comunidade Ativa"
               description="Junte-se a uma rede de profissionais e clientes. Encontre oportunidades, colabore e receba suporte da nossa comunidade."
             />
           </motion.div>
         </Section>
 
-        <Section id="como-funciona" title="Como funciona?">
+        <Section id="como-funciona" title="Como funciona?" hasBackground>
           <motion.div className="info-cards-container" variants={containerVariants}>
             <motion.div variants={itemVariants} className="info-card">
               <img src={iconUpload} alt="Ícone de upload" />
@@ -325,7 +343,7 @@ const LandingPage = () => {
           </motion.div>
         </Section>
         
-        <Section id="depoimentos" title="O que dizem sobre nós?">
+        <Section id="depoimentos" title="O que dizem sobre nós?" hasBackground>
           <motion.div className="testimonials-container" variants={containerVariants}>
             <TestimonialCard
               quote="Encontrei o freelancer perfeito para o meu projeto em apenas 2 dias. A plataforma é intuitiva e o pagamento seguro me deixou tranquilo."

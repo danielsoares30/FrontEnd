@@ -1,13 +1,13 @@
-// src/pages/TermsOfService.jsx
+// src/pages/TermosDeServico.jsx
 import React from 'react';
 import '../assets/styles/TermosdeServiço.css';
 
-const TermsOfService = () => {
+const TermosDeServico = () => {
     return (
         <div className="terms-of-service-container">
             <header className="terms-header">
                 <h1>Termos de Serviço</h1>
-                <p>Bem-vindo(a) ao **[Nome do Seu Site/Empresa]**! Ao acessar e usar este site, você concorda em cumprir e se vincular aos seguintes Termos de Serviço.</p>
+                <p>Bem-vindo(a) ao Freellaner! Ao acessar e usar este site, você concorda em cumprir e se vincular aos seguintes Termos de Serviço.</p>
             </header>
             
             <section className="terms-section">
@@ -32,7 +32,7 @@ const TermsOfService = () => {
 
             <section className="terms-section">
                 <h2>5. Limitação de Responsabilidade</h2>
-                <p>O **[Nome do Seu Site/Empresa]** não garante a precisão ou adequação das informações contidas neste site. Na máxima extensão permitida por lei, não seremos responsáveis por quaisquer danos diretos ou indiretos decorrentes do uso ou da incapacidade de usar o nosso site.</p>
+                <p>O Freellaner não garante a precisão ou adequação das informações contidas neste site. Na máxima extensão permitida por lei, não seremos responsáveis por quaisquer danos diretos ou indiretos decorrentes do uso ou da incapacidade de usar o nosso site.</p>
             </section>
             
             <section className="terms-section">
@@ -54,4 +54,4 @@ const TermsOfService = () => {
     );
 };
 
-export default TermsOfService;
+export default TermosDeServico;
