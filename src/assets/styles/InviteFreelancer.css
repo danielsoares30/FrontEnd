@@ -1,0 +1,111 @@
+/* src/pages/InviteFreelancer.css */
+
+/* Reutilizando variáveis e estrutura de projectDetails.css */
+
+/* Estilos Específicos do Formulário */
+.invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--cor-texto);
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.help-text {
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+    margin-top: 5px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1.2rem;
+    background: linear-gradient(90deg, var(--cor-primaria), #00AEEF);
+    border: none;
+    border-radius: 10px;
+    color: var(--cor-texto-branco);
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(0, 119, 182, 0.3);
+}
+
+.submit-button:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+    background: var(--cor-texto-secundario);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.success-message, .error-message {
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.success-message {
+    background-color: rgba(76, 175, 80, 0.1); /* Verde suave */
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.error-message {
+    background-color: rgba(244, 67, 54, 0.1); /* Vermelho suave */
+    color: #F44336;
+    border: 1px solid #F44336;
+}
+
+.success-message i, .error-message i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Estilo para informações do freelancer na sidebar */
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    margin-bottom: 15px;
+}
+.info-item i {
+    color: var(--cor-primaria);
+}

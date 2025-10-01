@@ -165,19 +165,19 @@ const LandingPage = () => {
   }, []);
 
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Atraso de 0.2s entre cada item
     },
-  };
+  },
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 }, // Inicia 30px abaixo e invisível
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
 
   return (
     <>
@@ -263,26 +263,35 @@ const LandingPage = () => {
           </motion.div>
         </Section>
 
-        <Section id="como-funciona" title="Como funciona?">
-          <motion.div className="info-cards-container" variants={containerVariants}>
-            <motion.div variants={itemVariants} className="info-card">
-              <img src={iconUpload} alt="Ícone de upload" />
-              <h5 className="info-card-title">Publique ou ofereça um serviço</h5>
-            </motion.div>
-            <motion.div variants={itemVariants} className="info-card">
-              <img src={iconInbox} alt="Ícone de caixa de entrada" />
-              <h5 className="info-card-title">Receba propostas ou pedidos</h5>
-            </motion.div>
-            <motion.div variants={itemVariants} className="info-card">
-              <img src={iconCheck} alt="Ícone de verificação" />
-              <h5 className="info-card-title">Negocie e inicie o trabalho</h5>
-            </motion.div>
-            <motion.div variants={itemVariants} className="info-card">
-              <img src={iconMoney} alt="Ícone de dinheiro" />
-              <h5 className="info-card-title">Pague e receba com segurança</h5>
-            </motion.div>
-          </motion.div>
-        </Section>
+<Section 
+    id="como-funciona" 
+    title="Como funciona?"
+    // A animação de rolagem é aplicada AQUI
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.3 }}
+    variants={containerVariants} // O container gerencia o stagger
+>
+    <div className="info-cards-container">
+        {/* Cada item usa a variante para o efeito de subida */}
+        <motion.div variants={itemVariants} className="info-card">
+            <img src={iconUpload} alt="Ícone de upload" />
+            <h5 className="info-card-title">Publique ou ofereça um serviço</h5>
+        </motion.div>
+        <motion.div variants={itemVariants} className="info-card">
+            <img src={iconInbox} alt="Ícone de caixa de entrada" />
+            <h5 className="info-card-title">Receba propostas ou pedidos</h5>
+        </motion.div>
+        <motion.div variants={itemVariants} className="info-card">
+            <img src={iconCheck} alt="Ícone de verificação" />
+            <h5 className="info-card-title">Negocie e inicie o trabalho</h5>
+        </motion.div>
+        <motion.div variants={itemVariants} className="info-card">
+            <img src={iconMoney} alt="Ícone de dinheiro" />
+            <h5 className="info-card-title">Pague e receba com segurança</h5>
+        </motion.div>
+    </div>
+</Section>
 
         <Section id="oportunidades" title="Oportunidades Populares">
           <motion.div className="oportunidades-container" variants={containerVariants}>

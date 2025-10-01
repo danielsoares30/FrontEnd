@@ -1,0 +1,297 @@
+/* --- src/assets/styles/projectDetails.css --- */
+
+/* Reutilizando as variáveis de tema do seu projeto (assumindo que estão definidas no global CSS) */
+
+/* Estilos da Página */
+.project-details-page-wrapper {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-family: 'Poppins', sans-serif;
+}
+.project-details-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+/* --- Cabeçalho da Vaga (Título e Empresa) --- */
+.details-header {
+    background-color: var(--cor-fundo-secao);
+    padding: 3rem 5%;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--cor-borda);
+    transition: background-color 0.3s;
+}
+body.dark-mode .details-header {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--cor-primaria); /* Anel de destaque */
+}
+
+.job-title {
+    font-size: clamp(2.2rem, 4vw, 3.2rem); /* Título maior e com mais impacto */
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+    color: var(--cor-texto);
+    letter-spacing: -1px;
+}
+
+.company-name {
+    font-size: 1.2rem;
+    color: var(--cor-texto-secundario);
+    margin-top: 0.2rem;
+}
+
+/* --- Layout de Conteúdo e Sidebar --- */
+.details-layout-grid {
+    display: grid;
+    grid-template-columns: 2fr minmax(300px, 1fr); /* Coluna de ação otimizada */
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* --- Conteúdo Principal (Main) --- */
+.details-main-content {
+    background-color: var(--cor-fundo-secao);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.detail-section {
+    margin-bottom: 3rem; /* Espaçamento maior entre seções */
+}
+
+.detail-section h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--cor-borda);
+}
+
+.job-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--cor-texto-secundario);
+}
+
+.detail-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-list li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--cor-texto);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* Estilo para ícones nas listas */
+.detail-list li i {
+    color: var(--cor-primaria);
+    margin-top: 5px;
+    font-size: 1.1rem;
+}
+.requirements-list li i {
+    color: #E53E3E; /* Cor de atenção para requisitos */
+}
+
+/* --- Tags de Tecnologia --- */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.detail-tag {
+    padding: 8px 16px;
+    background-color: var(--cor-fundo-tag);
+    color: var(--cor-texto-tag);
+    border: 1px solid var(--cor-borda-tag);
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+.detail-tag:hover {
+    background-color: var(--cor-primaria-claro);
+    color: var(--cor-primaria);
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+.details-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky; /* Torna a sidebar pegajosa ao rolar */
+    top: 2rem; /* Distância do topo */
+}
+
+.sidebar-card {
+    background-color: var(--cor-fundo-secao);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.action-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem; /* Padding ajustado */
+}
+
+/* Container do Salário e Localização (Visual Limpo) */
+.salary-info {
+    display: flex;
+    flex-direction: column; /* Organiza salário e localização verticalmente */
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.salary-value {
+    /* Exibe o valor do salário de forma elegante e completa */
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    color: var(--cor-primaria); /* Destaque primário */
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.salary-info > i {
+    /* Estilo para o ícone de dinheiro */
+    color: var(--cor-primaria);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.location-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 2.5rem; /* Espaço antes do botão */
+}
+.location-info i {
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+}
+
+/* Botão de Candidatura */
+.apply-button {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--gradiente-cta);
+    border: none;
+    border-radius: 10px;
+    color: var(--cor-texto-branco);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 119, 182, 0.4);
+}
+body.dark-mode .apply-button {
+    color: var(--cor-texto);
+}
+
+.apply-button.applied {
+    background: var(--cor-texto-secundario);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.apply-button:hover:not(.applied) {
+    transform: translateY(-4px);
+    filter: brightness(1.1);
+}
+
+/* --- Card do Empregador --- */
+.employer-card h3 {
+    font-size: 1.6rem;
+    color: var(--cor-texto);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 0.5rem;
+}
+
+.employer-name, .employer-title {
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    margin-bottom: 0.5rem;
+}
+.employer-title {
+    color: var(--cor-texto-secundario);
+    font-size: 1rem;
+}
+
+.employer-rating {
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    margin: 1rem 0;
+}
+.employer-rating i {
+    color: #FFC300; /* Cor de estrela */
+}
+
+.view-profile-link {
+    display: block;
+    text-align: center;
+    padding: 0.8rem;
+    border: 1px solid var(--cor-primaria);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--cor-primaria);
+    margin-top: 1.5rem;
+    transition: background-color 0.2s;
+}
+.view-profile-link:hover {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-branco);
+}
+
+/* --- Responsividade --- */
+@media (max-width: 992px) {
+    .details-layout-grid {
+        grid-template-columns: 1fr; /* Stack em telas menores */
+    }
+    .details-header {
+        padding: 2rem;
+    }
+    .company-logo {
+        width: 60px;
+        height: 60px;
+    }
+    .job-title {
+        font-size: 2rem;
+    }
+    .details-sidebar {
+        position: static; /* Desativa o sticky para telas pequenas */
+        top: 0;
+    }
+}

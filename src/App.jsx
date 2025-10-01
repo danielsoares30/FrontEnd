@@ -22,14 +22,16 @@ import Perfil from './pages/Perfil.jsx';
 import Configuracoes from './pages/Configuracoes.jsx';
 import BuscarProjetos from './pages/BuscarProjetos.jsx';
 import EncontrarFreelancers from './pages/EncontrarFreelancer.jsx';
-import PaginaProposta from './pages/PaginaProposta.jsx'
+import PaginaProposta from './pages/PaginaProposta.jsx';
 
+// IMPORTAÇÃO DE NOVAS PÁGINAS
+import ProjectDetailsPage from './pages/ProjectDetailsPage.jsx';
+import InviteFreelancerPage from './pages/InviteFreelancerPage.jsx'; // Inclua o InviteFreelancerPage
 
 
 function App() {
   return (
-    // A propriedade "basename" FOI REMOVIDA daqui.
-    <BrowserRouter basename = "/freellaner-plataforma">
+    <BrowserRouter basename="/freellaner-plataforma">
       <AuthProvider>
         <Routes>
           {/* --- ROTAS PÚBLICAS --- */}
@@ -54,8 +56,13 @@ function App() {
 
             <Route path="buscar-projetos" element={<BuscarProjetos />} />
             <Route path="encontrar-freelancers" element={<EncontrarFreelancers />} /> 
-            <Route path="pagina-propostas" element={<PaginaProposta />} />
+            <Route path="pagina-proposta" element={<PaginaProposta />} />
+
+            {/* ROTA DINÂMICA: Detalhes do Projeto */}
+            <Route path="projeto/:id" element={<ProjectDetailsPage />} />
             
+            {/* ROTA DINÂMICA: Convidar Freelancer - GARANTINDO O NOME CORRETO DA ROTA */}
+            <Route path="convidar-freelancer/:freelancerId" element={<InviteFreelancerPage />} />
           </Route>
         </Routes>
       </AuthProvider>

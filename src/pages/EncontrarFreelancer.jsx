@@ -59,13 +59,16 @@ const FreelancerCard = ({ freelancer }) => (
     <article className="freelancer-card">
         <div className="card-content">
             <header className="freelancer-header">
-                <img src={freelancer.photo} alt={`Foto de ${freelancer.name}`} className="freelancer-photo" />
-                <div className="freelancer-info">
-                    <h2 className="freelancer-name">{freelancer.name}</h2>
-                    <div className="freelancer-rating"><IconStar /><span>{freelancer.rating.toFixed(1)}</span></div>
-                </div>
-                <Link to="#" className="invite-btn">Convidar</Link>
-            </header>
+    <img src={freelancer.photo} alt={`Foto de ${freelancer.name}`} className="freelancer-photo" />
+    <div className="freelancer-info">
+        <h2 className="freelancer-name">{freelancer.name}</h2>
+        <div className="freelancer-rating"><IconStar /><span>{freelancer.rating.toFixed(1)}</span></div>
+    </div>
+    {/* CORREÇÃO: Link para a rota dinâmica de convite */}
+    <Link to={`/dashboard/convidar-freelancer/${freelancer.id}`} className="invite-btn">
+        Convidar
+    </Link>
+</header>
             <div className="freelancer-body">
                 <h3 className="freelancer-specialty">{freelancer.specialty}</h3>
                 <p className="freelancer-description">{freelancer.description}</p>

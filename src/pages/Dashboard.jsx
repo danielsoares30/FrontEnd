@@ -1,15 +1,20 @@
 // Ficheiro: src/pages/Dashboard.jsx
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // <-- CORRIGIDO AQUI
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import { useAuth } from '../hooks/useAuth';
 import Footer from '../components/Footer'; // Import do Footer
 import '../assets/styles/dashboard.css'; // Import do CSS
-
+import WithdrawalModal from '../components/WithdrawalModal'; // **1. IMPORTAR O MODAL**
 const Dashboard = () => {
   const chartRef = useRef(null);
   const { user } = useAuth();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+    const availableBalance = "1.250,00"; 
 
   useEffect(() => {
     // ... (lógica do gráfico permanece a mesma)
@@ -28,6 +33,11 @@ const Dashboard = () => {
       <path clipRule="evenodd" fillRule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z" />
     </svg>
   );
+  const handleCoWithdrawal = (amount) => {
+        // **AQUI VOCÊ COLOCARIA A LÓGICA REAL DE ENVIO PARA API**
+        alert(`Saque de R$ ${amount.toFixed(2).replace('.', ',')} solicitado com sucesso!`);
+        setIsModalOpen(false); // Fecha o modal após a ação
+    };
 
   return (
     // NOVO: Contêiner principal para controlar o layout
@@ -41,7 +51,9 @@ const Dashboard = () => {
           <div className="dashboard-card card-saldo">
             <div className="card-header-main">
               <div className="card-header"><i className="fas fa-wallet"></i><h3>Saldo Disponível</h3></div>
-              <button className="quick-action-button">Sacar</button>
+              <button className="quick-action-button"
+                                onClick={() => setIsModalOpen(true)}
+                            ></button>
             </div>
             <span className="card-value">R$ 1.250,00</span>
             <div className="card-trend positive"><i className="fas fa-arrow-up"></i><span>5.2% vs. mês anterior</span></div>
@@ -111,6 +123,12 @@ const Dashboard = () => {
 
       {/* Footer integrado e posicionado corretamente */}
       <Footer />
+       <WithdrawalModal 
+                balance={availableBalance}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleCoWithdrawal}
+            />
     </div>
   );
 };

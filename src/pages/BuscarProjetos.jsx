@@ -134,7 +134,7 @@ const ProjectCard = ({ project }) => (
                     <span><IconMapPin /> {project.location}</span>
                     <span><IconDollarSign /> {project.budget}</span>
                 </div>
-                <Link to="#" className="proposta-btn">Ver Detalhes</Link>
+                <Link to={`/dashboard/projeto/${project.id}`} className="proposta-btn">Ver Detalhes</Link>
             </div>
         </footer>
     </article>
