@@ -1,81 +1,121 @@
-/* src/assets/styles/termsOfService.css */
+/* src/assets/styles/TermosdeServiço.css */
 
-/* VARIÁVEIS DE COR para o tema */
+/* VARIÁVEIS DE COR */
 :root {
-    --cor-fundo-geral: #111;
-    --cor-texto-principal: #f0f0f0;
-    --cor-texto-secundario: #aaa;
-    --cor-fundo-card: #1a1a1a;
-}
-@media (prefers-color-scheme: light) {
+    --cor-fundo-pagina: #0A0A0A; /* Fundo mais escuro */
+    --cor-fundo-card: #1A1A1A;   /* Fundo do conteúdo */
+    --cor-texto-principal: #F0F0F0; /* Texto claro */
+    --cor-texto-secundario: #B0B0B0; /* Texto secundário mais suave */
+    --cor-borda: #333333; /* Borda sutil */
+    --cor-destaque: #6A0DAD; /* Cor de destaque (roxo, por exemplo) */
+  }
+  
+  /* Modo claro (se você tiver um botão de toggle para ele) */
+  @media (prefers-color-scheme: light) {
     :root {
-        --cor-fundo-geral: #f0f2f5;
-        --cor-texto-principal: #2c3e50;
-        --cor-texto-secundario: #555;
-        --cor-fundo-card: #fff;
+      --cor-fundo-pagina: #F9FAFB;
+      --cor-fundo-card: #FFFFFF;
+      --cor-texto-principal: #111827;
+      --cor-texto-secundario: #6B7280;
+      --cor-borda: #E5E7EB;
     }
-}
-
-/* Estilos de layout e cor */
-.terms-of-service-container {
-    max-width: 800px;
-    margin: 4rem auto;
-    padding: 2rem;
+  }
+  
+  /* Estilos de layout e cor */
+  body {
     background-color: var(--cor-fundo-card);
     color: var(--cor-texto-principal);
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.terms-header h1 {
-    font-size: 2.5rem;
+    font-family: 'Inter', sans-serif; /* Uma fonte moderna */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .terms-of-service-container {
+    max-width: 900px; /* Largura máxima para o conteúdo */
+    margin: 4rem auto; /* Centraliza o conteúdo e adiciona espaço vertical */
+    padding: 3rem; /* Espaçamento interno generoso */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Espaço entre as seções */
+    margin-left: 210px;
+  }
+  
+  .terms-header {
+    text-align: center;
+    margin-bottom: 2.5rem; /* Espaço maior abaixo do cabeçalho */
+  }
+  
+  .terms-header h1 {
+    font-size: clamp(2.8rem, 5vw, 4rem); /* Título responsivo e maior */
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+    color: var(--cor-texto-principal);
+    text-transform: uppercase; /* Deixa o título em maiúsculas */
+    letter-spacing: 2px;
+  }
+  
+  .terms-header p {
+    font-size: 1.15rem; /* Parágrafo introdutório um pouco maior */
+    color: var(--cor-texto-secundario);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8; /* Melhor legibilidade */
+  }
+  
+  .terms-section {
+    padding: 1.5rem 0; /* Espaçamento interno para as seções */
+    border-bottom: 1px solid var(--cor-borda); /* Separador sutil */
+  }
+  
+  .terms-section:last-child {
+    border-bottom: none; /* Remove a borda da última seção */
+  }
+  
+  .terms-section h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem); /* Títulos de seção responsivos */
     font-weight: 700;
-    margin-bottom: 1rem;
-    color: var(--cor-texto-principal);
-}
-
-.terms-header p {
-    font-size: 1.1rem;
-    color: var(--cor-texto-secundario);
-}
-
-.terms-section {
-    margin-top: 2rem;
-}
-
-.terms-section h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--cor-texto-principal);
-}
-
-.terms-section p, .terms-section li {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--cor-texto-secundario);
     margin-bottom: 0.8rem;
-}
-
-.terms-section ul {
+    color: var(--cor-destaque); /* Usa a cor de destaque para os títulos de seção */
+  }
+  
+  .terms-section p, .terms-section li {
+    font-size: 1.05rem; /* Texto do corpo ligeiramente maior */
+    line-height: 1.7;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 0.7rem;
+  }
+  
+  .terms-section ul {
     list-style-type: disc;
-    padding-left: 2rem;
-}
-
-.terms-section li {
-    margin-bottom: 0.5rem;
-}
-
-/* Adaptando para o modo claro */
-@media (prefers-color-scheme: light) {
+    padding-left: 2.5rem; /* Mais recuo para listas */
+  }
+  
+  .terms-section li {
+    margin-bottom: 0.6rem;
+  }
+  
+  /* Responsividade básica */
+  @media (max-width: 768px) {
     .terms-of-service-container {
-        background-color: var(--cor-fundo-card);
-        color: var(--cor-texto-principal);
+      margin: 2rem auto;
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
     }
-    .terms-header h1, .terms-section h2 {
-        color: var(--cor-texto-principal);
+  
+    .terms-header h1 {
+      font-size: 2.2rem;
     }
-    .terms-header p, .terms-section p, .terms-section li {
-        color: var(--cor-texto-secundario);
+  
+    .terms-header p {
+      font-size: 1rem;
     }
-}
+  
+    .terms-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .terms-section p, .terms-section li {
+      font-size: 0.95rem;
+    }
+  }
